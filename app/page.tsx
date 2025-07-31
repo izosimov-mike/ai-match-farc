@@ -193,7 +193,7 @@ export default function AIMatchQuiz() {
     })
 
     const maxCount = Math.max(...Object.values(counts))
-    const winners = Object.entries(counts).filter(([_, count]) => count === maxCount)
+    const winners = Object.entries(counts).filter(([, count]) => count === maxCount)
 
     if (winners.length > 1) {
       return "hybrid"
