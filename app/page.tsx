@@ -193,7 +193,7 @@ export default function AIMatchQuiz() {
     })
 
     const maxCount = Math.max(...Object.values(counts))
-    const winners = Object.entries(counts).filter(([_, count]) => count === maxCount)
+    const winners = Object.entries(counts).filter(([, count]) => count === maxCount)
 
     if (winners.length > 1) {
       return "hybrid"
@@ -305,7 +305,7 @@ export default function AIMatchQuiz() {
               <p className="text-2xl mb-4 font-semibold text-gray-200">Which AI Personality Are You?</p>
               <p className="text-gray-300 mb-6 text-lg leading-relaxed">7 questions to discover your digital twin вњЁ</p>
               <div className="text-gray-400 text-base max-w-md mx-auto leading-relaxed">
-                Are you ChatGPT energy? Grok chaos? Claude vibes? Let's find out! рџ‘Ђ
+                Are you ChatGPT energy? Grok chaos? Claude vibes? Let&apos;s find out! рџ‘Ђ
               </div>
             </CardHeader>
             <CardContent className="px-8 pb-12">
@@ -317,7 +317,7 @@ export default function AIMatchQuiz() {
                 className="w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-bold text-xl py-6 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
                 <Sparkles className="w-6 h-6 mr-3" />
-                Let's Go!
+                Let&apos;s Go!
               </Button>
             </CardContent>
           </Card>
