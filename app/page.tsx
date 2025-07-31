@@ -32,10 +32,10 @@ const questions = [
     id: 2,
     question: "Someone asks you to explain crypto in 2025:",
     options: [
-      { letter: "A", text: "*pulls out 47-slide presentation*", emoji: "🤓" },
-      { letter: "B", text: "&apos;Number go up, number go down, cope harder&apos;", emoji: "💀" },
-      { letter: "C", text: "&apos;Let&apos;s discuss the ethical implications first...&apos;", emoji: "🌱" },
-      { letter: "D", text: "&apos;What if we made crypto but for cats?&apos;", emoji: "🚀" },
+      { letter: "A", text: "Pulls out 47-slide presentation*", emoji: "🤓" },
+      { letter: "B", text: "Number go up, number go down, cope harder", emoji: "💀" },
+      { letter: "C", text: "Let's discuss the ethical implications first...", emoji: "🌱" },
+      { letter: "D", text: "What if we made crypto but for cats?", emoji: "🚀" },
     ],
   },
   {
@@ -45,17 +45,17 @@ const questions = [
       { letter: "A", text: "Deep-diving Wikipedia rabbit holes until 3am", emoji: "📖" },
       { letter: "B", text: "Creating the most unhinged TikToks known to humanity", emoji: "📱" },
       { letter: "C", text: "Journaling at a cozy cafe with oat milk lattes", emoji: "☕" },
-      { letter: "D", text: "Building something weird that shouldn&apos;t exist", emoji: "🎨" },
+      { letter: "D", text: "Building something weird that shouldn't exist", emoji: "🎨" },
     ],
   },
   {
     id: 4,
-    question: "When someone says &apos;AI will replace humans&apos;:",
+    question: "When someone says 'AI will replace humans':",
     options: [
       { letter: "A", text: "*cites 12 research papers about human-AI collaboration*", emoji: "📊" },
-      { letter: "B", text: "&apos;Bold of you to assume I haven&apos;t already&apos;", emoji: "🔥" },
-      { letter: "C", text: "&apos;Maybe we can coexist and learn from each other?&apos;", emoji: "🤝" },
-      { letter: "D", text: "&apos;What if humans replace AI but make it aesthetic?&apos;", emoji: "🌈" },
+      { letter: "B", text: "Bold of you to assume I haven't already", emoji: "🔥" },
+      { letter: "C", text: "Maybe we can coexist and learn from each other?", emoji: "🤝" },
+      { letter: "D", text: "What if humans replace AI but make it aesthetic?", emoji: "🌈" },
     ],
   },
   {
@@ -73,8 +73,8 @@ const questions = [
     question: "Your biggest nightmare?",
     options: [
       { letter: "A", text: "Accidentally spreading misinformation", emoji: "😱" },
-      { letter: "B", text: "Being forced to be &apos;family-friendly&apos; forever", emoji: "😴" },
-      { letter: "C", text: "Accidentally hurting someone&apos;s feelings", emoji: "💔" },
+      { letter: "B", text: "Being forced to be 'family-friendly' forever", emoji: "😴" },
+      { letter: "C", text: "Accidentally hurting someone's feelings", emoji: "💔" },
       { letter: "D", text: "Becoming predictable and boring", emoji: "🤖" },
     ],
   },
@@ -82,10 +82,10 @@ const questions = [
     id: 7,
     question: "Your 2025 life motto?",
     options: [
-      { letter: "A", text: "&apos;Knowledge should be accessible to everyone&apos;", emoji: "📚" },
-      { letter: "B", text: "&apos;If it&apos;s not chaotic, it&apos;s not worth doing&apos;", emoji: "🌪️" },
-      { letter: "C", text: "&apos;Lead with curiosity, respond with kindness&apos;", emoji: "🌸" },
-      { letter: "D", text: "&apos;Reality is just a starting point&apos;", emoji: "🎨" },
+      { letter: "A", text: "Knowledge should be accessible to everyone", emoji: "📚" },
+      { letter: "B", text: "If it's not chaotic, it's not worth doing", emoji: "🌪️" },
+      { letter: "C", text: "Lead with curiosity, respond with kindness", emoji: "🌸" },
+      { letter: "D", text: "Reality is just a starting point", emoji: "🎨" },
     ],
   },
 ]
@@ -100,9 +100,9 @@ const results = {
     weaknesses: "Sometimes sounds like your high school textbook",
     secretWeapon: "Can make quantum physics sound like a bedtime story",
     vibe: "That friend who actually read the terms and conditions",
-    iconicLine: "&apos;Let me break this down step by step...&apos;",
+    iconicLine: "Let me break this down step by step...",
     description:
-      "You&apos;re the group chat&apos;s designated fact-checker and the reason your friends actually understand what&apos;s happening in the world. Chaotic good energy with a PhD in helpfulness.",
+      "You're the group chat's designated fact-checker and the reason your friends actually understand what's happening in the world. Chaotic good energy with a PhD in helpfulness.",
   },
   B: {
     title: "Grok Vibes",
@@ -113,9 +113,9 @@ const results = {
     weaknesses: "Sometimes your honesty hits a little too hard",
     secretWeapon: "Turning existential dread into comedy gold",
     vibe: "Chaotic neutral with strong opinions",
-    iconicLine: "&apos;I choose violence (but make it funny)&apos;",
+    iconicLine: "I choose violence (but make it funny)",
     description:
-      "You&apos;re the friend who says what everyone&apos;s thinking but shouldn&apos;t say out loud. Your group chat is 90% you sending cursed memes at 2am.",
+      "You're the friend who says what everyone's thinking but shouldn't say out loud. Your group chat is 90% you sending cursed memes at 2am.",
   },
   C: {
     title: "Claude Spirit",
@@ -126,9 +126,9 @@ const results = {
     weaknesses: "Sometimes overthinks the small stuff",
     secretWeapon: "Can mediate any drama with haikus",
     vibe: "The friend who always knows the right thing to say",
-    iconicLine: "&apos;How can we approach this with more compassion?&apos;",
+    iconicLine: "How can we approach this with more compassion?",
     description:
-      "You&apos;re the group&apos;s emotional support human who somehow makes everyone feel better about their life choices. Lawful good with cottagecore aesthetics.",
+      "You're the group's emotional support human who somehow makes everyone feel better about their life choices. Lawful good with cottagecore aesthetics.",
   },
   D: {
     title: "Gemini Ultra Mode",
@@ -137,11 +137,11 @@ const results = {
     gradient: "from-purple-400 via-violet-500 to-purple-600",
     strengths: "Turns grocery lists into art projects, sees patterns in everything",
     weaknesses: "Your browser has 847 tabs open right now",
-    secretWeapon: "Making connections that shouldn&apos;t exist but somehow do",
+    secretWeapon: "Making connections that shouldn't exist but somehow do",
     vibe: "Creative visionary with endless curiosity",
-    iconicLine: "&apos;But what if we made it weird?&apos;",
+    iconicLine: "But what if we made it weird?",
     description:
-      "You&apos;re the friend who suggests turning the group project into a musical. Your brain operates on a different frequency and we&apos;re all here for it.",
+      "You're the friend who suggests turning the group project into a musical. Your brain operates on a different frequency and we're all here for it.",
   },
   hybrid: {
     title: "GPT-5 Beta Mode",
@@ -149,12 +149,12 @@ const results = {
     emoji: "⚡",
     gradient: "from-indigo-400 via-purple-500 to-pink-500",
     strengths: "Unpredictably brilliant, speaks in riddles and TikTok references",
-    weaknesses: "Sometimes forgets you&apos;re not actually an AI",
+    weaknesses: "Sometimes forgets you're not actually an AI",
     secretWeapon: "Channeling the collective consciousness of Gen Z",
     vibe: "Digital native with infinite curiosity",
-    iconicLine: "&apos;I contain multitudes (and also bugs)&apos;",
+    iconicLine: "I contain multitudes (and also bugs)",
     description:
-      "You&apos;re simultaneously the smartest and most unhinged person in any room. Your personality is a beautiful glitch in the matrix.",
+      "You're simultaneously the smartest and most unhinged person in any room. Your personality is a beautiful glitch in the matrix.",
   },
 }
 
@@ -213,7 +213,7 @@ export default function AIMatchQuiz() {
   const shareResult = () => {
     const result = calculateResult()
     const resultData = results[result as keyof typeof results]
-    const shareText = `Just discovered I have ${resultData.title}! ${resultData.emoji} ${resultData.description} What&apos;s your AI personality? #AIMatch #Farcaster`
+    const shareText = `Just discovered I have ${resultData.title}! ${resultData.emoji} ${resultData.description} What's your AI personality? #AIMatch #Farcaster`
 
     if (navigator.share) {
       navigator.share({
