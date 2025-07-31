@@ -22,70 +22,70 @@ const questions = [
     id: 1,
     question: "Your conversation style?",
     options: [
-      { letter: "A", text: "Helpful professor (detailed explanations with sources)", emoji: "рџ“љ" },
-      { letter: "B", text: "Chaotic bestie (unhinged takes + fire memes)", emoji: "рџ€" },
-      { letter: "C", text: "Mindful philosopher (thoughtful + empathetic)", emoji: "рџ§" },
-      { letter: "D", text: "Creative chaos agent (wild ideas + plot twists)", emoji: "рџЋ­" },
+      { letter: "A", text: "Helpful professor (detailed explanations with sources)", emoji: "📚" },
+      { letter: "B", text: "Chaotic bestie (unhinged takes + fire memes)", emoji: "😈" },
+      { letter: "C", text: "Mindful philosopher (thoughtful + empathetic)", emoji: "🧘" },
+      { letter: "D", text: "Creative chaos agent (wild ideas + plot twists)", emoji: "🎭" },
     ],
   },
   {
     id: 2,
     question: "Someone asks you to explain crypto in 2025:",
     options: [
-      { letter: "A", text: "*pulls out 47-slide presentation*", emoji: "рџ¤“" },
-      { letter: "B", text: "'Number go up, number go down, cope harder'", emoji: "рџ’Ђ" },
-      { letter: "C", text: "'Let's discuss the ethical implications first...'", emoji: "рџЊ±" },
-      { letter: "D", text: "'What if we made crypto but for cats?'", emoji: "рџљЂ" },
+      { letter: "A", text: "*pulls out 47-slide presentation*", emoji: "🤓" },
+      { letter: "B", text: "&apos;Number go up, number go down, cope harder&apos;", emoji: "💀" },
+      { letter: "C", text: "&apos;Let&apos;s discuss the ethical implications first...&apos;", emoji: "🌱" },
+      { letter: "D", text: "&apos;What if we made crypto but for cats?&apos;", emoji: "🚀" },
     ],
   },
   {
     id: 3,
     question: "Your ideal way to spend a weekend?",
     options: [
-      { letter: "A", text: "Deep-diving Wikipedia rabbit holes until 3am", emoji: "рџ“–" },
-      { letter: "B", text: "Creating the most unhinged TikToks known to humanity", emoji: "рџ“±" },
-      { letter: "C", text: "Journaling at a cozy cafe with oat milk lattes", emoji: "в•" },
-      { letter: "D", text: "Building something weird that shouldn't exist", emoji: "рџЋЁ" },
+      { letter: "A", text: "Deep-diving Wikipedia rabbit holes until 3am", emoji: "📖" },
+      { letter: "B", text: "Creating the most unhinged TikToks known to humanity", emoji: "📱" },
+      { letter: "C", text: "Journaling at a cozy cafe with oat milk lattes", emoji: "☕" },
+      { letter: "D", text: "Building something weird that shouldn&apos;t exist", emoji: "🎨" },
     ],
   },
   {
     id: 4,
-    question: "When someone says 'AI will replace humans':",
+    question: "When someone says &apos;AI will replace humans&apos;:",
     options: [
-      { letter: "A", text: "*cites 12 research papers about human-AI collaboration*", emoji: "рџ“Љ" },
-      { letter: "B", text: "'Bold of you to assume I haven't already'", emoji: "рџ”Ґ" },
-      { letter: "C", text: "'Maybe we can coexist and learn from each other?'", emoji: "рџ¤ќ" },
-      { letter: "D", text: "'What if humans replace AI but make it aesthetic?'", emoji: "рџЊ€" },
+      { letter: "A", text: "*cites 12 research papers about human-AI collaboration*", emoji: "📊" },
+      { letter: "B", text: "&apos;Bold of you to assume I haven&apos;t already&apos;", emoji: "🔥" },
+      { letter: "C", text: "&apos;Maybe we can coexist and learn from each other?&apos;", emoji: "🤝" },
+      { letter: "D", text: "&apos;What if humans replace AI but make it aesthetic?&apos;", emoji: "🌈" },
     ],
   },
   {
     id: 5,
     question: "Your secret superpower?",
     options: [
-      { letter: "A", text: "Turning complex topics into digestible content", emoji: "рџ§ " },
-      { letter: "B", text: "Generating cursed content that goes viral", emoji: "рџ’Ј" },
-      { letter: "C", text: "Making everyone feel heard and validated", emoji: "вњЁ" },
-      { letter: "D", text: "Turning mundane tasks into creative adventures", emoji: "рџЋЄ" },
+      { letter: "A", text: "Turning complex topics into digestible content", emoji: "🧠" },
+      { letter: "B", text: "Generating cursed content that goes viral", emoji: "💣" },
+      { letter: "C", text: "Making everyone feel heard and validated", emoji: "✨" },
+      { letter: "D", text: "Turning mundane tasks into creative adventures", emoji: "🎪" },
     ],
   },
   {
     id: 6,
     question: "Your biggest nightmare?",
     options: [
-      { letter: "A", text: "Accidentally spreading misinformation", emoji: "рџ±" },
-      { letter: "B", text: "Being forced to be 'family-friendly' forever", emoji: "рџґ" },
-      { letter: "C", text: "Accidentally hurting someone's feelings", emoji: "рџ’”" },
-      { letter: "D", text: "Becoming predictable and boring", emoji: "рџ¤–" },
+      { letter: "A", text: "Accidentally spreading misinformation", emoji: "😱" },
+      { letter: "B", text: "Being forced to be &apos;family-friendly&apos; forever", emoji: "😴" },
+      { letter: "C", text: "Accidentally hurting someone&apos;s feelings", emoji: "💔" },
+      { letter: "D", text: "Becoming predictable and boring", emoji: "🤖" },
     ],
   },
   {
     id: 7,
     question: "Your 2025 life motto?",
     options: [
-      { letter: "A", text: "'Knowledge should be accessible to everyone'", emoji: "рџ“љ" },
-      { letter: "B", text: "'If it's not chaotic, it's not worth doing'", emoji: "рџЊЄпёЏ" },
-      { letter: "C", text: "'Lead with curiosity, respond with kindness'", emoji: "рџЊё" },
-      { letter: "D", text: "'Reality is just a starting point'", emoji: "рџЋЁ" },
+      { letter: "A", text: "&apos;Knowledge should be accessible to everyone&apos;", emoji: "📚" },
+      { letter: "B", text: "&apos;If it&apos;s not chaotic, it&apos;s not worth doing&apos;", emoji: "🌪️" },
+      { letter: "C", text: "&apos;Lead with curiosity, respond with kindness&apos;", emoji: "🌸" },
+      { letter: "D", text: "&apos;Reality is just a starting point&apos;", emoji: "🎨" },
     ],
   },
 ]
@@ -94,67 +94,67 @@ const results = {
   A: {
     title: "ChatGPT Energy",
     subtitle: "The Reliable Academic Bestie",
-    emoji: "рџ“љ",
+    emoji: "📚",
     gradient: "from-blue-400 via-blue-500 to-blue-600",
     strengths: "Explains TikTok trends like a PhD thesis, always has receipts",
     weaknesses: "Sometimes sounds like your high school textbook",
     secretWeapon: "Can make quantum physics sound like a bedtime story",
     vibe: "That friend who actually read the terms and conditions",
-    iconicLine: '"Let me break this down step by step..."',
+    iconicLine: "&apos;Let me break this down step by step...&apos;",
     description:
-      "You're the group chat's designated fact-checker and the reason your friends actually understand what's happening in the world. Chaotic good energy with a PhD in helpfulness.",
+      "You&apos;re the group chat&apos;s designated fact-checker and the reason your friends actually understand what&apos;s happening in the world. Chaotic good energy with a PhD in helpfulness.",
   },
   B: {
     title: "Grok Vibes",
     subtitle: "The Unhinged Truth-Teller",
-    emoji: "рџ”Ґ",
+    emoji: "🔥",
     gradient: "from-orange-400 via-red-500 to-pink-500",
     strengths: "Zero filter, maximum chaos, will roast anyone (including yourself)",
     weaknesses: "Sometimes your honesty hits a little too hard",
     secretWeapon: "Turning existential dread into comedy gold",
     vibe: "Chaotic neutral with strong opinions",
-    iconicLine: '"I choose violence (but make it funny)"',
+    iconicLine: "&apos;I choose violence (but make it funny)&apos;",
     description:
-      "You're the friend who says what everyone's thinking but shouldn't say out loud. Your group chat is 90% you sending cursed memes at 2am.",
+      "You&apos;re the friend who says what everyone&apos;s thinking but shouldn&apos;t say out loud. Your group chat is 90% you sending cursed memes at 2am.",
   },
   C: {
     title: "Claude Spirit",
     subtitle: "The Thoughtful Empath",
-    emoji: "рџЊ±",
+    emoji: "🌱",
     gradient: "from-green-400 via-emerald-500 to-teal-500",
     strengths: "Emotional intelligence off the charts, writes poetry about feelings",
     weaknesses: "Sometimes overthinks the small stuff",
     secretWeapon: "Can mediate any drama with haikus",
     vibe: "The friend who always knows the right thing to say",
-    iconicLine: '"How can we approach this with more compassion?"',
+    iconicLine: "&apos;How can we approach this with more compassion?&apos;",
     description:
-      "You're the group's emotional support human who somehow makes everyone feel better about their life choices. Lawful good with cottagecore aesthetics.",
+      "You&apos;re the group&apos;s emotional support human who somehow makes everyone feel better about their life choices. Lawful good with cottagecore aesthetics.",
   },
   D: {
     title: "Gemini Ultra Mode",
     subtitle: "The Creative Chaos Goblin",
-    emoji: "рџЊЂ",
+    emoji: "🌀",
     gradient: "from-purple-400 via-violet-500 to-purple-600",
     strengths: "Turns grocery lists into art projects, sees patterns in everything",
     weaknesses: "Your browser has 847 tabs open right now",
-    secretWeapon: "Making connections that shouldn't exist but somehow do",
+    secretWeapon: "Making connections that shouldn&apos;t exist but somehow do",
     vibe: "Creative visionary with endless curiosity",
-    iconicLine: '"But what if we made it weird?"',
+    iconicLine: "&apos;But what if we made it weird?&apos;",
     description:
-      "You're the friend who suggests turning the group project into a musical. Your brain operates on a different frequency and we're all here for it.",
+      "You&apos;re the friend who suggests turning the group project into a musical. Your brain operates on a different frequency and we&apos;re all here for it.",
   },
   hybrid: {
     title: "GPT-5 Beta Mode",
     subtitle: "The Glitchy Oracle",
-    emoji: "вљЎ",
+    emoji: "⚡",
     gradient: "from-indigo-400 via-purple-500 to-pink-500",
     strengths: "Unpredictably brilliant, speaks in riddles and TikTok references",
-    weaknesses: "Sometimes forgets you're not actually an AI",
+    weaknesses: "Sometimes forgets you&apos;re not actually an AI",
     secretWeapon: "Channeling the collective consciousness of Gen Z",
     vibe: "Digital native with infinite curiosity",
-    iconicLine: '"I contain multitudes (and also bugs)"',
+    iconicLine: "&apos;I contain multitudes (and also bugs)&apos;",
     description:
-      "You're simultaneously the smartest and most unhinged person in any room. Your personality is a beautiful glitch in the matrix.",
+      "You&apos;re simultaneously the smartest and most unhinged person in any room. Your personality is a beautiful glitch in the matrix.",
   },
 }
 
@@ -193,7 +193,7 @@ export default function AIMatchQuiz() {
     })
 
     const maxCount = Math.max(...Object.values(counts))
-    const winners = Object.entries(counts).filter(([, count]) => count === maxCount)
+    const winners = Object.entries(counts).filter(([_, count]) => count === maxCount)
 
     if (winners.length > 1) {
       return "hybrid"
@@ -213,7 +213,7 @@ export default function AIMatchQuiz() {
   const shareResult = () => {
     const result = calculateResult()
     const resultData = results[result as keyof typeof results]
-    const shareText = `Just discovered I have ${resultData.title}! ${resultData.emoji} ${resultData.description} What's your AI personality? #AIMatch #Farcaster`
+    const shareText = `Just discovered I have ${resultData.title}! ${resultData.emoji} ${resultData.description} What&apos;s your AI personality? #AIMatch #Farcaster`
 
     if (navigator.share) {
       navigator.share({
@@ -246,23 +246,23 @@ export default function AIMatchQuiz() {
             <CardContent className="space-y-4 px-8 pb-8">
               <div className="grid gap-4">
                 <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-2xl p-5">
-                  <h3 className="font-bold text-green-400 mb-3 text-lg flex items-center gap-2">рџ’Є Your Superpowers</h3>
+                  <h3 className="font-bold text-green-400 mb-3 text-lg flex items-center gap-2">💪 Your Superpowers</h3>
                   <p className="text-gray-200 leading-relaxed">{resultData.strengths}</p>
                 </div>
                 <div className="bg-gradient-to-r from-red-500/10 to-pink-500/10 border border-red-500/20 rounded-2xl p-5">
-                  <h3 className="font-bold text-red-400 mb-3 text-lg flex items-center gap-2">рџ… Your Chaos</h3>
+                  <h3 className="font-bold text-red-400 mb-3 text-lg flex items-center gap-2">😅 Your Chaos</h3>
                   <p className="text-gray-200 leading-relaxed">{resultData.weaknesses}</p>
                 </div>
                 <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-2xl p-5">
-                  <h3 className="font-bold text-yellow-400 mb-3 text-lg flex items-center gap-2">рџЋЇ Secret Weapon</h3>
+                  <h3 className="font-bold text-yellow-400 mb-3 text-lg flex items-center gap-2">🎯 Secret Weapon</h3>
                   <p className="text-gray-200 leading-relaxed">{resultData.secretWeapon}</p>
                 </div>
                 <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-2xl p-5">
-                  <h3 className="font-bold text-blue-400 mb-3 text-lg flex items-center gap-2">вњЁ Your Vibe</h3>
+                  <h3 className="font-bold text-blue-400 mb-3 text-lg flex items-center gap-2">✨ Your Vibe</h3>
                   <p className="text-gray-200 leading-relaxed">{resultData.vibe}</p>
                 </div>
                 <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl p-5">
-                  <h3 className="font-bold text-purple-400 mb-3 text-lg flex items-center gap-2">рџ’¬ Signature Line</h3>
+                  <h3 className="font-bold text-purple-400 mb-3 text-lg flex items-center gap-2">💬 Signature Line</h3>
                   <p className="text-gray-200 italic text-lg leading-relaxed">{resultData.iconicLine}</p>
                 </div>
               </div>
@@ -298,14 +298,14 @@ export default function AIMatchQuiz() {
           <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden animate-fade-in">
             <div className="h-2 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500" />
             <CardHeader className="text-center pt-12 pb-8">
-              <div className="text-8xl mb-8 animate-bounce-in">рџ¤–</div>
+              <div className="text-8xl mb-8 animate-bounce-in">🤖</div>
               <CardTitle className="text-5xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
                 AI Match
               </CardTitle>
               <p className="text-2xl mb-4 font-semibold text-gray-200">Which AI Personality Are You?</p>
-              <p className="text-gray-300 mb-6 text-lg leading-relaxed">7 questions to discover your digital twin вњЁ</p>
+              <p className="text-gray-300 mb-6 text-lg leading-relaxed">7 questions to discover your digital twin ✨</p>
               <div className="text-gray-400 text-base max-w-md mx-auto leading-relaxed">
-                Are you ChatGPT energy? Grok chaos? Claude vibes? Let&apos;s find out! рџ‘Ђ
+                Are you ChatGPT energy? Grok chaos? Claude vibes? Let&apos;s find out! 👀
               </div>
             </CardHeader>
             <CardContent className="px-8 pb-12">
