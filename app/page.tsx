@@ -25,6 +25,11 @@ declare global {
         url: string
       }) => Promise<{ success: boolean }>
     }
+    sdk?: {
+      actions: {
+        ready: () => void
+      }
+    }
   }
 }
 
@@ -209,6 +214,11 @@ export default function AIMatchQuiz() {
     // Check if Farcaster is available
     if (typeof window !== 'undefined') {
       setIsFarcasterAvailable(!!window.farsign && !!window.farcast)
+      
+      // Call sdk.actions.ready() to remove splash screen
+      if (window.sdk?.actions?.ready) {
+        window.sdk.actions.ready()
+      }
     }
   }, [])
 
@@ -320,45 +330,44 @@ export default function AIMatchQuiz() {
     const resultData = results[result as keyof typeof results]
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 font-inter">
-        <div className="max-w-2xl mx-auto animate-bounce-in">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-2 font-inter">
+        <div className="max-w-sm mx-auto animate-bounce-in">
           <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden">
-            <div className={`h-2 bg-gradient-to-r ${resultData.gradient}`} />
             <CardContent className="p-0">
               <div className="w-full">
                 <img 
                   src={`/images/results/${getImageName(result)}`}
                   alt={`${resultData.title} Result`}
-                  className="w-full h-auto rounded-b-3xl animate-fade-in"
+                  className="w-full h-auto rounded-t-3xl animate-fade-in"
                   style={{ animationDelay: '0.3s' }}
                 />
               </div>
               
-              <div className="px-8 pb-8 pt-6">
-                <div className="flex gap-4">
+              <div className="px-4 pb-4 pt-4">
+                <div className="flex gap-2">
                   <Button
                     onClick={shareOnFarcaster}
-                    className={`flex-1 bg-gradient-to-r ${resultData.gradient} hover:scale-105 transition-all duration-300 text-white font-semibold py-4 rounded-2xl shadow-lg hover:shadow-xl`}
+                    className={`flex-1 bg-gradient-to-r ${resultData.gradient} hover:scale-105 transition-all duration-300 text-white font-semibold py-3 rounded-2xl shadow-lg hover:shadow-xl text-sm`}
                   >
-                    <Share2 className="w-5 h-5 mr-2" />
+                    <Share2 className="w-4 h-4 mr-2" />
                     Share on Farcaster
                   </Button>
                   <Button
                     onClick={resetQuiz}
                     variant="outline"
-                    className="flex-1 border-2 border-white/20 text-white hover:bg-white/10 bg-white/5 backdrop-blur-sm font-semibold py-4 rounded-2xl hover:scale-105 transition-all duration-300"
+                    className="flex-1 border-2 border-white/20 text-white hover:bg-white/10 bg-white/5 backdrop-blur-sm font-semibold py-3 rounded-2xl hover:scale-105 transition-all duration-300 text-sm"
                   >
-                    <RotateCcw className="w-5 h-5 mr-2" />
-                    Retake Quiz
+                    <RotateCcw className="w-4 h-4 mr-2" />
+                    Retake
                   </Button>
                 </div>
                 
                 {isFarcasterAvailable && (
-                  <div className="mt-4">
+                  <div className="mt-3">
                     <Button
                       onClick={addToFarcaster}
                       variant="outline"
-                      className="w-full border-2 border-white/20 text-white hover:bg-white/10 bg-white/5 backdrop-blur-sm font-semibold py-3 rounded-2xl hover:scale-105 transition-all duration-300"
+                      className="w-full border-2 border-white/20 text-white hover:bg-white/10 bg-white/5 backdrop-blur-sm font-semibold py-2 rounded-2xl hover:scale-105 transition-all duration-300 text-sm"
                     >
                       <Sparkles className="w-4 h-4 mr-2" />
                       Add to Farcaster
@@ -374,36 +383,36 @@ export default function AIMatchQuiz() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 font-inter">
-      <div className="max-w-2xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-2 font-inter">
+      <div className="max-w-sm mx-auto">
         {currentQuestion === -1 ? (
           <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden animate-fade-in">
             <div className="h-2 bg-gradient-to-r from-cyan-400 via-blue-500 via-purple-500 to-pink-500" />
-            <CardHeader className="text-center pt-12 pb-8">
-              <div className="text-8xl mb-8 animate-bounce-in">🤖</div>
-              <CardTitle className="text-5xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
+            <CardHeader className="text-center pt-6 pb-4">
+              <div className="text-5xl mb-4 animate-bounce-in">🤖</div>
+              <CardTitle className="text-2xl font-bold mb-3 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
                 AI Match
               </CardTitle>
-              <p className="text-2xl mb-4 font-semibold text-gray-200">Which AI Personality Are You?</p>
-              <p className="text-gray-300 mb-6 text-lg leading-relaxed">7 questions to discover your digital twin ✨</p>
-              <div className="text-gray-400 text-base max-w-md mx-auto leading-relaxed">
+              <p className="text-base mb-2 font-semibold text-gray-200">Which AI Personality Are You?</p>
+              <p className="text-gray-300 mb-3 text-xs leading-relaxed">7 questions to discover your digital twin ✨</p>
+              <div className="text-gray-400 text-xs max-w-xs mx-auto leading-relaxed">
                 Are you ChatGPT energy? Grok chaos? Claude vibes? Let&apos;s find out! 👀
               </div>
             </CardHeader>
-            <CardContent className="px-8 pb-12">
+            <CardContent className="px-4 pb-6">
               {isFarcasterAvailable && !user && (
                 <Button
                   onClick={handleSignIn}
-                  className="w-full mb-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold text-lg py-4 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  className="w-full mb-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold text-xs py-2 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
                 >
-                  <User className="w-5 h-5 mr-2" />
+                  <User className="w-3 h-3 mr-2" />
                   Sign in with Farcaster
                 </Button>
               )}
               
               {user && (
-                <div className="mb-4 text-center">
-                  <p className="text-gray-300 text-sm">Signed in as @{user.username}</p>
+                <div className="mb-3 text-center">
+                  <p className="text-gray-300 text-xs">Signed in as @{user.username}</p>
                 </div>
               )}
               
@@ -412,45 +421,45 @@ export default function AIMatchQuiz() {
                   setShuffledQuestions(generateShuffledQuestions())
                   setCurrentQuestion(0)
                 }}
-                className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-bold text-xl py-6 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-bold text-base py-3 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
-                <Sparkles className="w-6 h-6 mr-3" />
+                <Sparkles className="w-4 h-4 mr-2" />
                 Let&apos;s Go!
               </Button>
             </CardContent>
           </Card>
         ) : (
-          <div className="space-y-8 animate-slide-up">
+          <div className="space-y-4 animate-slide-up">
             <div className="text-center text-white">
               <Badge
                 variant="secondary"
-                className="mb-6 px-4 py-2 text-sm font-semibold bg-white/10 text-white border-white/20 rounded-full"
+                className="mb-4 px-3 py-1 text-xs font-semibold bg-white/10 text-white border-white/20 rounded-full"
               >
                 Question {currentQuestion + 1} of {shuffledQuestions.length}
               </Badge>
-              <div className="mb-6">
+              <div className="mb-4">
                 <Progress
                   value={((currentQuestion + 1) / shuffledQuestions.length) * 100}
-                  className="h-3 bg-white/10 rounded-full overflow-hidden"
+                  className="h-2 bg-white/10 rounded-full overflow-hidden"
                 />
               </div>
             </div>
 
             <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden">
               <div className="h-1 bg-gradient-to-r from-cyan-400 via-blue-500 via-purple-500 to-pink-500" />
-              <CardHeader className="pt-8 pb-6">
-                <CardTitle className="text-2xl md:text-3xl text-center text-white font-bold leading-tight">
+              <CardHeader className="pt-6 pb-4">
+                <CardTitle className="text-lg text-center text-white font-bold leading-tight">
                   {shuffledQuestions[currentQuestion].question}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="px-6 pb-8">
-                <div className="grid gap-4">
+              <CardContent className="px-4 pb-6">
+                <div className="grid gap-3">
                   {shuffledQuestions[currentQuestion].options.map((option, index) => (
                     <Button
                       key={option.letter}
                       onClick={() => handleAnswer(option.letter)}
                       variant="outline"
-                      className={`p-6 h-auto text-left justify-start border-2 border-white/20 text-white bg-white/5 hover:bg-white/15 transition-all duration-300 rounded-2xl font-medium text-base ${
+                      className={`p-4 h-auto text-left justify-start border-2 border-white/20 text-white bg-white/5 hover:bg-white/15 transition-all duration-300 rounded-2xl font-medium text-sm ${
                         selectedAnswer === option.letter
                           ? "bg-white/20 scale-105 border-white/40 shadow-lg"
                           : "hover:scale-102 hover:border-white/30"
@@ -458,8 +467,8 @@ export default function AIMatchQuiz() {
                       disabled={selectedAnswer !== null}
                       style={{ animationDelay: `${index * 100}ms` }}
                     >
-                      <span className="text-3xl mr-4 flex-shrink-0">{option.emoji}</span>
-                      <span className="flex-1 text-white leading-relaxed">{option.text}</span>
+                      <span className="text-2xl mr-3 flex-shrink-0">{option.emoji}</span>
+                      <span className="flex-1 text-white leading-relaxed text-xs">{option.text}</span>
                     </Button>
                   ))}
                 </div>
