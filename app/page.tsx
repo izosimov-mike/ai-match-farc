@@ -1,11 +1,32 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
-import { Share2, RotateCcw, Sparkles } from "lucide-react"
+import { Share2, RotateCcw, Sparkles, User } from "lucide-react"
+
+// Farcaster Mini App Types
+declare global {
+  interface Window {
+    farsign?: {
+      signIn: () => Promise<{ success: boolean; fid?: string; username?: string }>
+    }
+    farcast?: {
+      composeCast: (params: {
+        text: string
+        embeds?: Array<{ url: string }>
+      }) => Promise<{ success: boolean; hash?: string }>
+      addMiniApp: (params: {
+        name: string
+        description: string
+        icon: string
+        url: string
+      }) => Promise<{ success: boolean }>
+    }
+  }
+}
 
 // Shuffle function to randomize answer order
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -165,11 +186,44 @@ export default function AIMatchQuiz() {
       options: shuffleArray(question.options),
     }))
 
+  const getImageName = (result: string) => {
+    const imageMap: { [key: string]: string } = {
+      'A': 'chatgpt.png',
+      'B': 'grok.png',
+      'C': 'claude.png',
+      'D': 'gemini.png',
+      'hybrid': 'gpt5.png'
+    }
+    return imageMap[result] || 'chatgpt.png'
+  }
+
   const [shuffledQuestions, setShuffledQuestions] = useState(() => generateShuffledQuestions())
   const [currentQuestion, setCurrentQuestion] = useState(-1)
   const [answers, setAnswers] = useState<string[]>([])
   const [showResults, setShowResults] = useState(false)
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
+  const [user, setUser] = useState<{ fid?: string; username?: string } | null>(null)
+  const [isFarcasterAvailable, setIsFarcasterAvailable] = useState(false)
+
+  useEffect(() => {
+    // Check if Farcaster is available
+    if (typeof window !== 'undefined') {
+      setIsFarcasterAvailable(!!window.farsign && !!window.farcast)
+    }
+  }, [])
+
+  const handleSignIn = async () => {
+    if (window.farsign) {
+      try {
+        const result = await window.farsign.signIn()
+        if (result.success) {
+          setUser({ fid: result.fid, username: result.username })
+        }
+      } catch (error) {
+        console.error('Sign in failed:', error)
+      }
+    }
+  }
 
   const handleAnswer = (letter: string) => {
     setSelectedAnswer(letter)
@@ -210,19 +264,54 @@ export default function AIMatchQuiz() {
     setShuffledQuestions(generateShuffledQuestions())
   }
 
-  const shareResult = () => {
+  const shareOnFarcaster = async () => {
     const result = calculateResult()
     const resultData = results[result as keyof typeof results]
     const shareText = `Just discovered I have ${resultData.title}! ${resultData.emoji} ${resultData.description} What's your AI personality? #AIMatch #Farcaster`
 
-    if (navigator.share) {
-      navigator.share({
-        title: "AI Match Quiz Results",
-        text: shareText,
-        url: window.location.href,
-      })
+    if (window.farcast) {
+      try {
+        const castResult = await window.farcast.composeCast({
+          text: shareText,
+          embeds: [{ url: window.location.href }]
+        })
+        
+        if (castResult.success) {
+          console.log('Cast posted successfully:', castResult.hash)
+        }
+      } catch (error) {
+        console.error('Failed to post cast:', error)
+      }
     } else {
-      navigator.clipboard.writeText(shareText + " " + window.location.href)
+      // Fallback to regular share
+      if (navigator.share) {
+        navigator.share({
+          title: "AI Match Quiz Results",
+          text: shareText,
+          url: window.location.href,
+        })
+      } else {
+        navigator.clipboard.writeText(shareText + " " + window.location.href)
+      }
+    }
+  }
+
+  const addToFarcaster = async () => {
+    if (window.farcast) {
+      try {
+        const result = await window.farcast.addMiniApp({
+          name: "AI Match Quiz",
+          description: "Discover your AI personality with this fun quiz!",
+          icon: "🤖",
+          url: window.location.href
+        })
+        
+        if (result.success) {
+          console.log('Mini app added successfully')
+        }
+      } catch (error) {
+        console.error('Failed to add mini app:', error)
+      }
     }
   }
 
@@ -235,54 +324,47 @@ export default function AIMatchQuiz() {
         <div className="max-w-2xl mx-auto animate-bounce-in">
           <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden">
             <div className={`h-2 bg-gradient-to-r ${resultData.gradient}`} />
-            <CardHeader className="text-center pt-8 pb-6">
-              <div className="text-7xl mb-6 animate-bounce-in">{resultData.emoji}</div>
-              <CardTitle className="text-4xl font-bold mb-3 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                {resultData.title}
-              </CardTitle>
-              <p className="text-xl text-gray-300 mb-6 font-medium">{resultData.subtitle}</p>
-              <p className="text-gray-200 italic text-lg leading-relaxed max-w-lg mx-auto">{resultData.description}</p>
-            </CardHeader>
-            <CardContent className="space-y-4 px-8 pb-8">
-              <div className="grid gap-4">
-                <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-2xl p-5">
-                  <h3 className="font-bold text-green-400 mb-3 text-lg flex items-center gap-2">💪 Your Superpowers</h3>
-                  <p className="text-gray-200 leading-relaxed">{resultData.strengths}</p>
-                </div>
-                <div className="bg-gradient-to-r from-red-500/10 to-pink-500/10 border border-red-500/20 rounded-2xl p-5">
-                  <h3 className="font-bold text-red-400 mb-3 text-lg flex items-center gap-2">😅 Your Chaos</h3>
-                  <p className="text-gray-200 leading-relaxed">{resultData.weaknesses}</p>
-                </div>
-                <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-2xl p-5">
-                  <h3 className="font-bold text-yellow-400 mb-3 text-lg flex items-center gap-2">🎯 Secret Weapon</h3>
-                  <p className="text-gray-200 leading-relaxed">{resultData.secretWeapon}</p>
-                </div>
-                <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-2xl p-5">
-                  <h3 className="font-bold text-blue-400 mb-3 text-lg flex items-center gap-2">✨ Your Vibe</h3>
-                  <p className="text-gray-200 leading-relaxed">{resultData.vibe}</p>
-                </div>
-                <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl p-5">
-                  <h3 className="font-bold text-purple-400 mb-3 text-lg flex items-center gap-2">💬 Signature Line</h3>
-                  <p className="text-gray-200 italic text-lg leading-relaxed">{resultData.iconicLine}</p>
-                </div>
+            <CardContent className="p-0">
+              <div className="w-full">
+                <img 
+                  src={`/images/results/${getImageName(result)}`}
+                  alt={`${resultData.title} Result`}
+                  className="w-full h-auto rounded-b-3xl animate-fade-in"
+                  style={{ animationDelay: '0.3s' }}
+                />
               </div>
-
-              <div className="flex gap-4 pt-6">
-                <Button
-                  onClick={shareResult}
-                  className={`flex-1 bg-gradient-to-r ${resultData.gradient} hover:scale-105 transition-all duration-300 text-white font-semibold py-4 rounded-2xl shadow-lg hover:shadow-xl`}
-                >
-                  <Share2 className="w-5 h-5 mr-2" />
-                  Share Your Vibe
-                </Button>
-                <Button
-                  onClick={resetQuiz}
-                  variant="outline"
-                  className="flex-1 border-2 border-white/20 text-white hover:bg-white/10 bg-white/5 backdrop-blur-sm font-semibold py-4 rounded-2xl hover:scale-105 transition-all duration-300"
-                >
-                  <RotateCcw className="w-5 h-5 mr-2" />
-                  Retake Quiz
-                </Button>
+              
+              <div className="px-8 pb-8 pt-6">
+                <div className="flex gap-4">
+                  <Button
+                    onClick={shareOnFarcaster}
+                    className={`flex-1 bg-gradient-to-r ${resultData.gradient} hover:scale-105 transition-all duration-300 text-white font-semibold py-4 rounded-2xl shadow-lg hover:shadow-xl`}
+                  >
+                    <Share2 className="w-5 h-5 mr-2" />
+                    Share on Farcaster
+                  </Button>
+                  <Button
+                    onClick={resetQuiz}
+                    variant="outline"
+                    className="flex-1 border-2 border-white/20 text-white hover:bg-white/10 bg-white/5 backdrop-blur-sm font-semibold py-4 rounded-2xl hover:scale-105 transition-all duration-300"
+                  >
+                    <RotateCcw className="w-5 h-5 mr-2" />
+                    Retake Quiz
+                  </Button>
+                </div>
+                
+                {isFarcasterAvailable && (
+                  <div className="mt-4">
+                    <Button
+                      onClick={addToFarcaster}
+                      variant="outline"
+                      className="w-full border-2 border-white/20 text-white hover:bg-white/10 bg-white/5 backdrop-blur-sm font-semibold py-3 rounded-2xl hover:scale-105 transition-all duration-300"
+                    >
+                      <Sparkles className="w-4 h-4 mr-2" />
+                      Add to Farcaster
+                    </Button>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -296,7 +378,7 @@ export default function AIMatchQuiz() {
       <div className="max-w-2xl mx-auto">
         {currentQuestion === -1 ? (
           <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden animate-fade-in">
-            <div className="h-2 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500" />
+            <div className="h-2 bg-gradient-to-r from-cyan-400 via-blue-500 via-purple-500 to-pink-500" />
             <CardHeader className="text-center pt-12 pb-8">
               <div className="text-8xl mb-8 animate-bounce-in">🤖</div>
               <CardTitle className="text-5xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
@@ -309,12 +391,28 @@ export default function AIMatchQuiz() {
               </div>
             </CardHeader>
             <CardContent className="px-8 pb-12">
+              {isFarcasterAvailable && !user && (
+                <Button
+                  onClick={handleSignIn}
+                  className="w-full mb-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold text-lg py-4 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                >
+                  <User className="w-5 h-5 mr-2" />
+                  Sign in with Farcaster
+                </Button>
+              )}
+              
+              {user && (
+                <div className="mb-4 text-center">
+                  <p className="text-gray-300 text-sm">Signed in as @{user.username}</p>
+                </div>
+              )}
+              
               <Button
                 onClick={() => {
                   setShuffledQuestions(generateShuffledQuestions())
                   setCurrentQuestion(0)
                 }}
-                className="w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-bold text-xl py-6 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-bold text-xl py-6 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
                 <Sparkles className="w-6 h-6 mr-3" />
                 Let&apos;s Go!
@@ -339,7 +437,7 @@ export default function AIMatchQuiz() {
             </div>
 
             <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden">
-              <div className="h-1 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500" />
+              <div className="h-1 bg-gradient-to-r from-cyan-400 via-blue-500 via-purple-500 to-pink-500" />
               <CardHeader className="pt-8 pb-6">
                 <CardTitle className="text-2xl md:text-3xl text-center text-white font-bold leading-tight">
                   {shuffledQuestions[currentQuestion].question}
