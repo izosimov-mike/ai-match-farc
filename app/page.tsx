@@ -292,10 +292,22 @@ useEffect(() => {
   console.log('Share button clicked - START');
   
   try {
+    // Check if window object is available
+    if (typeof window === 'undefined') {
+      console.error('Window object not available');
+      return;
+    }
+
+    // Log window.farcast availability
+    console.log('window.farcast available:', !!window.farcast);
+    
     if (!window.farcast) {
       console.error('window.farcast is not available');
       return;
     }
+
+    // Log composeCast method availability
+    console.log('window.farcast.composeCast available:', !!window.farcast.composeCast);
 
     if (!window.farcast.composeCast) {
       console.error('window.farcast.composeCast is not available');
@@ -305,17 +317,24 @@ useEffect(() => {
     const result = calculateResult();
     const resultData = results[result as keyof typeof results];
     
-    console.log('About to call composeCast with:', {
+    console.log('Preparing to share:', {
       result,
       title: resultData.title,
-      emoji: resultData.emoji,
-      url: "https://ai-match-psi.vercel.app"
+      emoji: resultData.emoji
     });
 
-    await window.farcast.composeCast({
-      text: `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\n${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`,
-      embeds: [{ url: "https://ai-match-psi.vercel.app" }]
-    });
+    // Add try-catch specifically for composeCast
+    try {
+      const castResult = await window.farcast.composeCast({
+        text: `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\n${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`,
+        embeds: [{ url: "https://ai-match-psi.vercel.app" }]
+      });
+      
+      console.log('Cast result:', castResult);
+    } catch (castError) {
+      console.error('ComposeCast specific error:', castError);
+      throw castError; // Re-throw to be caught by outer try-catch
+    }
     
     console.log('Share completed successfully');
   } catch (error) {
@@ -374,7 +393,10 @@ useEffect(() => {
               <div className="px-4 pb-4 pt-4">
                                  <div className="flex gap-2">
 <Button
-  onClick={shareOnFarcaster}  // Make sure it's directly calling the function
+  onClick={() => {
+    console.log('Share button clicked via onClick');
+    shareOnFarcaster();
+  }}
   className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-semibold py-3 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm"
 >
   <Share2 className="w-4 h-4 mr-2" />
