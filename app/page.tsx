@@ -288,7 +288,7 @@ useEffect(() => {
     return winners[0][0] as keyof typeof results
   }
 
- const shareOnFarcaster = async () => {
+const shareOnFarcaster = async () => {
   console.log('Share button clicked - START');
   
   try {
@@ -298,20 +298,19 @@ useEffect(() => {
 
     // Check if in Preview Tool iframe
     if (window !== window.parent) {
-      console.log('In Preview Tool iframe, sending postMessage');
+      console.log('In Preview Tool iframe, sending frame.action');
       window.parent.postMessage({
-        type: 'frame.share',  // Changed from 'SHARE' to 'frame.share'
+        type: 'frame.action',
         data: {
+          action: 'post',
           text: shareText,
-          castText: shareText, // Adding explicit castText
-          url: "https://ai-match-psi.vercel.app",
-          target: "*"
+          url: "https://ai-match-psi.vercel.app"
         }
       }, '*');
       return;
     }
 
-    // When not in iframe
+    // When not in iframe (direct browser usage)
     if (window.farcast?.composeCast) {
       console.log('Using direct farcast API');
       await window.farcast.composeCast({
