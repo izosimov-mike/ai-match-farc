@@ -187,6 +187,7 @@ const results = {
 }
 
 export default function AIMatchQuiz() {
+  const [isInteractionStarted, setIsInteractionStarted] = useState(false);
   const generateShuffledQuestions = () =>
     questions.map((question) => ({
       ...question,
@@ -288,24 +289,47 @@ useEffect(() => {
     return winners[0][0] as keyof typeof results
   }
 
-  const shareOnFarcaster = async () => {
-  console.log('Share button clicked'); // Add debug log
-  if (window.farcast?.composeCast) {
-    console.log('Farcaster composeCast available'); // Add debug log
-    const result = calculateResult()
-    const resultData = results[result as keyof typeof results]
-    try {
-      console.log('Attempting to compose cast...'); // Add debug log
-      await window.farcast.composeCast({
-        text: `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\n${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`,
-        embeds: [{ url: "https://ai-match-psi.vercel.app" }]
-      });
-      console.log('Cast composed successfully'); // Add debug log
-    } catch (error) {
-      console.error('Share error:', error);
+ const shareOnFarcaster = async () => {
+  console.log('Share button clicked - START');
+  
+  try {
+    if (!window.farcast) {
+      console.error('window.farcast is not available');
+      return;
     }
-  } else {
-    console.log('Farcaster composeCast not available'); // Add debug log
+
+    if (!window.farcast.composeCast) {
+      console.error('window.farcast.composeCast is not available');
+      return;
+    }
+
+    const result = calculateResult();
+    const resultData = results[result as keyof typeof results];
+    
+    console.log('About to call composeCast with:', {
+      result,
+      title: resultData.title,
+      emoji: resultData.emoji,
+      url: "https://ai-match-psi.vercel.app"
+    });
+
+    await window.farcast.composeCast({
+      text: `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\n${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`,
+      embeds: [{ url: "https://ai-match-psi.vercel.app" }]
+    });
+    
+    console.log('Share completed successfully');
+  } catch (error) {
+    console.error('Share failed:', error);
+    if (error instanceof Error) {
+      console.error('Error details:', {
+        name: error.name,
+        message: error.message,
+        stack: error.stack
+      });
+    }
+  } finally {
+    console.log('Share button clicked - END');
   }
 };
 
@@ -350,13 +374,13 @@ useEffect(() => {
               
               <div className="px-4 pb-4 pt-4">
                                  <div className="flex gap-2">
-                   <Button
-                     onClick={shareOnFarcaster}
-                     className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-semibold py-3 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm"
-                   >
-                     <Share2 className="w-4 h-4 mr-2" />
-                     Share on Farcaster
-                   </Button>
+<Button
+  onClick={shareOnFarcaster}  // Make sure it's directly calling the function
+  className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-semibold py-3 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm"
+>
+  <Share2 className="w-4 h-4 mr-2" />
+  Share on Farcaster
+</Button>
                  </div>
                 
                 {isFarcasterAvailable && (
@@ -415,6 +439,7 @@ useEffect(() => {
               
               <Button
                 onClick={() => {
+                  setIsInteractionStarted(true);
                   setShuffledQuestions(generateShuffledQuestions())
                   setCurrentQuestion(0)
                 }}
