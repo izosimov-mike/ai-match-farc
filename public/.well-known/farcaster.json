@@ -10,5 +10,10 @@
   "ogTitle": "AI Match: Find Your AI Vibe",
   "ogDescription": "Take a fun quiz to discover your AI personality and share your vibe on Farcaster!",
   "ogImageUrl": "https://preview-mini-app-for-farcaster-kzmnitnf5e3l31a9issy.vusercontent.net/images/promo.png",
-  "homeUrl": "https://preview-mini-app-for-farcaster-kzmnitnf5e3l31a9issy.vusercontent.net"
+  "homeUrl": "https://preview-mini-app-for-farcaster-kzmnitnf5e3l31a9issy.vusercontent.net",
+  "accountAssociation": {
+    "header": "eyJmaWQiOjM1ODU3NCwidHlwZSI6ImF1dGgiLCJrZXkiOiIweDgxY2RCNDBFQzc5N2FEMERBQTJDNjcwYjUyMEQ3QkY0MjYzNzgxQmYifQ",
+    "payload": "eyJkb21haW4iOiJhaS1tYXRjaC1wc2kudmVyY2VsLmFwcCJ9",
+    "signature": "jjIjHyr6Onhs3z/bFLjJz0252a59qPjLqOQy6IwelJI1Vh6HDvsOzhP0YdJJIJztM15ev/HQrRyCX7DDjYN0/hw="
+  }
 } 

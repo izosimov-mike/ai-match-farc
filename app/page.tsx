@@ -351,7 +351,7 @@ export default function AIMatchQuiz() {
                                  <div className="flex gap-2">
                    <Button
                      onClick={shareOnFarcaster}
-                     className={`w-full bg-gradient-to-r ${resultData.gradient} hover:scale-105 transition-all duration-300 text-white font-semibold py-3 rounded-2xl shadow-lg hover:shadow-xl text-sm`}
+                     className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-semibold py-3 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm"
                    >
                      <Share2 className="w-4 h-4 mr-2" />
                      Share on Farcaster
@@ -379,8 +379,8 @@ export default function AIMatchQuiz() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-2 font-inter">
-      <div className="max-w-sm mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-2 font-inter flex items-center justify-center">
+      <div className="max-w-sm w-full">
         {currentQuestion === -1 ? (
           <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden animate-fade-in">
             <div className="h-2 bg-gradient-to-r from-cyan-400 via-blue-500 via-purple-500 to-pink-500" />
@@ -455,7 +455,7 @@ export default function AIMatchQuiz() {
                        key={option.letter}
                        onClick={() => handleAnswer(option.letter)}
                        variant="outline"
-                       className={`p-3 h-auto text-left justify-start border-2 border-white/20 text-white bg-white/5 hover:bg-white/15 transition-all duration-300 rounded-xl font-medium text-xs ${
+                       className={`p-2 h-auto text-left justify-start border-2 border-white/20 text-white bg-white/5 hover:bg-white/15 transition-all duration-300 rounded-lg font-medium text-xs ${
                          selectedAnswer === option.letter
                            ? "bg-white/20 scale-105 border-white/40 shadow-lg"
                            : "hover:scale-102 hover:border-white/30"
@@ -463,7 +463,7 @@ export default function AIMatchQuiz() {
                        disabled={selectedAnswer !== null}
                        style={{ animationDelay: `${index * 100}ms` }}
                      >
-                       <span className="text-xl mr-2 flex-shrink-0">{option.emoji}</span>
+                       <span className="text-lg mr-2 flex-shrink-0">{option.emoji}</span>
                        <span className="flex-1 text-white leading-relaxed text-xs">{option.text}</span>
                      </Button>
                   ))}
