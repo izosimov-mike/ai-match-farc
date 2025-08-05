@@ -187,7 +187,6 @@ const results = {
 }
 
 export default function AIMatchQuiz() {
-  const [isInteractionStarted, setIsInteractionStarted] = useState(false);
   const generateShuffledQuestions = () =>
     questions.map((question) => ({
       ...question,
@@ -439,7 +438,6 @@ useEffect(() => {
               
               <Button
                 onClick={() => {
-                  setIsInteractionStarted(true);
                   setShuffledQuestions(generateShuffledQuestions())
                   setCurrentQuestion(0)
                 }}
