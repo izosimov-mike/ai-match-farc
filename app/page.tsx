@@ -7,17 +7,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Share2, Sparkles, User } from "lucide-react"
-import { useFarcasterSDK } from '@farcaster/auth-kit';
 
-function App() {
-  const { sdk } = useFarcasterSDK();
-  
-  useEffect(() => {
-    if (sdk) {
-      sdk.actions.ready();
-    }
-  }, [sdk]);
-}
+useEffect(() => {
+  if (typeof window !== 'undefined' && window.sdk?.actions?.ready) {
+    window.sdk.actions.ready();
+  }
+}, []);
 
 // Farcaster Mini App Types
 declare global {
