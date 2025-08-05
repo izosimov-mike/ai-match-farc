@@ -34,10 +34,10 @@ export const metadata: Metadata = {
     description: "Take a fun quiz to discover your AI personality and share your vibe on Farcaster!",
     images: ["https://ai-match-psi.vercel.app/images/promo.png"],
   },
-  other: {
+other: {
     'fc:frame': 'vNext',
-    'fc:frame:image': 'https://ai-match-psi.vercel.app/preview.png',
-    'fc:frame:button:1': 'Start Matching',
+    'fc:frame:image': 'https://ai-match-psi.vercel.app/images/promo.png', // Use existing promo image
+    'fc:frame:button:1': 'Start Matching'
   }
 }
 
@@ -48,6 +48,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
+      <head>
+  <meta property="fc:frame" content="vNext" />
+  <meta property="fc:frame:image" content="https://ai-match-psi.vercel.app/images/promo.png" />
+  <meta property="fc:frame:button:1" content="Start Matching" />
+</head>
       <body className={`${inter.className} antialiased`}>{children}</body>
     </html>
   )
