@@ -292,47 +292,34 @@ useEffect(() => {
   console.log('Share button clicked - START');
   
   try {
-    // Check if window object is available
-    if (typeof window === 'undefined') {
-      console.error('Window object not available');
-      return;
-    }
-
     const result = calculateResult();
     const resultData = results[result as keyof typeof results];
-    const shareText = `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\n${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`;
-    
-    // When in iframe, use message passing
+    const shareText = `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\nI'm ${resultData.subtitle} - ${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`;
+
+    // Check if in Preview Tool iframe
     if (window !== window.parent) {
-      console.log('In iframe, using postMessage');
+      console.log('In Preview Tool iframe, sending postMessage');
       window.parent.postMessage({
-        type: 'SHARE',
+        type: 'frame.share',  // Changed from 'SHARE' to 'frame.share'
         data: {
           text: shareText,
-          url: "https://ai-match-psi.vercel.app"
+          castText: shareText, // Adding explicit castText
+          url: "https://ai-match-psi.vercel.app",
+          target: "*"
         }
       }, '*');
       return;
     }
-    
-    // When not in iframe, use direct farcast API
+
+    // When not in iframe
     if (window.farcast?.composeCast) {
       console.log('Using direct farcast API');
-      const castResult = await window.farcast.composeCast({
+      await window.farcast.composeCast({
         text: shareText,
         embeds: [{ url: "https://ai-match-psi.vercel.app" }]
       });
-      console.log('Cast result:', castResult);
     } else {
-      // Fallback for when farcast is not available
-      if (navigator.share) {
-        await navigator.share({
-          text: shareText,
-          url: "https://ai-match-psi.vercel.app"
-        });
-      } else {
-        console.error('No sharing mechanism available');
-      }
+      console.error('Farcaster sharing not available');
     }
   } catch (error) {
     console.error('Share failed:', error);
