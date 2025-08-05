@@ -215,10 +215,17 @@ export default function AIMatchQuiz() {
     if (typeof window !== 'undefined') {
       setIsFarcasterAvailable(!!window.farsign && !!window.farcast)
       
-      // Call sdk.actions.ready() to remove splash screen
+      // Call sdk.actions.ready() immediately to remove splash screen
       if (window.sdk?.actions?.ready) {
         window.sdk.actions.ready()
       }
+    }
+  }, [])
+
+  // Call sdk.actions.ready() immediately on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.sdk?.actions?.ready) {
+      window.sdk.actions.ready()
     }
   }, [])
 
@@ -344,23 +351,15 @@ export default function AIMatchQuiz() {
               </div>
               
               <div className="px-4 pb-4 pt-4">
-                <div className="flex gap-2">
-                  <Button
-                    onClick={shareOnFarcaster}
-                    className={`flex-1 bg-gradient-to-r ${resultData.gradient} hover:scale-105 transition-all duration-300 text-white font-semibold py-3 rounded-2xl shadow-lg hover:shadow-xl text-sm`}
-                  >
-                    <Share2 className="w-4 h-4 mr-2" />
-                    Share on Farcaster
-                  </Button>
-                  <Button
-                    onClick={resetQuiz}
-                    variant="outline"
-                    className="flex-1 border-2 border-white/20 text-white hover:bg-white/10 bg-white/5 backdrop-blur-sm font-semibold py-3 rounded-2xl hover:scale-105 transition-all duration-300 text-sm"
-                  >
-                    <RotateCcw className="w-4 h-4 mr-2" />
-                    Retake
-                  </Button>
-                </div>
+                                 <div className="flex gap-2">
+                   <Button
+                     onClick={shareOnFarcaster}
+                     className={`w-full bg-gradient-to-r ${resultData.gradient} hover:scale-105 transition-all duration-300 text-white font-semibold py-3 rounded-2xl shadow-lg hover:shadow-xl text-sm`}
+                   >
+                     <Share2 className="w-4 h-4 mr-2" />
+                     Share on Farcaster
+                   </Button>
+                 </div>
                 
                 {isFarcasterAvailable && (
                   <div className="mt-3">
@@ -455,21 +454,21 @@ export default function AIMatchQuiz() {
               <CardContent className="px-4 pb-6">
                 <div className="grid gap-3">
                   {shuffledQuestions[currentQuestion].options.map((option, index) => (
-                    <Button
-                      key={option.letter}
-                      onClick={() => handleAnswer(option.letter)}
-                      variant="outline"
-                      className={`p-4 h-auto text-left justify-start border-2 border-white/20 text-white bg-white/5 hover:bg-white/15 transition-all duration-300 rounded-2xl font-medium text-sm ${
-                        selectedAnswer === option.letter
-                          ? "bg-white/20 scale-105 border-white/40 shadow-lg"
-                          : "hover:scale-102 hover:border-white/30"
-                      }`}
-                      disabled={selectedAnswer !== null}
-                      style={{ animationDelay: `${index * 100}ms` }}
-                    >
-                      <span className="text-2xl mr-3 flex-shrink-0">{option.emoji}</span>
-                      <span className="flex-1 text-white leading-relaxed text-xs">{option.text}</span>
-                    </Button>
+                                         <Button
+                       key={option.letter}
+                       onClick={() => handleAnswer(option.letter)}
+                       variant="outline"
+                       className={`p-3 h-auto text-left justify-start border-2 border-white/20 text-white bg-white/5 hover:bg-white/15 transition-all duration-300 rounded-xl font-medium text-xs ${
+                         selectedAnswer === option.letter
+                           ? "bg-white/20 scale-105 border-white/40 shadow-lg"
+                           : "hover:scale-102 hover:border-white/30"
+                       }`}
+                       disabled={selectedAnswer !== null}
+                       style={{ animationDelay: `${index * 100}ms` }}
+                     >
+                       <span className="text-xl mr-2 flex-shrink-0">{option.emoji}</span>
+                       <span className="flex-1 text-white leading-relaxed text-xs">{option.text}</span>
+                     </Button>
                   ))}
                 </div>
               </CardContent>
