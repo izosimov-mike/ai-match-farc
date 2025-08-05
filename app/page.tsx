@@ -28,7 +28,7 @@ declare global {
     }
     sdk?: {
       actions: {
-        ready: () => void
+        ready: () => Promise<void>
       }
     }
   }
@@ -59,7 +59,7 @@ const questions = [
     id: 2,
     question: "Someone asks you to explain crypto in 2025:",
     options: [
-      { letter: "A", text: "Pulls out 47-slide presentation*", emoji: "🤓" },
+      { letter: "A", text: "Pulls out 47-slide presentation", emoji: "🤓" },
       { letter: "B", text: "Number go up, number go down, cope harder", emoji: "💀" },
       { letter: "C", text: "Let's discuss the ethical implications first...", emoji: "🌱" },
       { letter: "D", text: "What if we made crypto but for cats?", emoji: "🚀" },
@@ -79,7 +79,7 @@ const questions = [
     id: 4,
     question: "When someone says 'AI will replace humans':",
     options: [
-      { letter: "A", text: "*cites 12 research papers about human-AI collaboration*", emoji: "📊" },
+      { letter: "A", text: "cites 12 research papers about human-AI collaboration", emoji: "📊" },
       { letter: "B", text: "Bold of you to assume I haven't already", emoji: "🔥" },
       { letter: "C", text: "Maybe we can coexist and learn from each other?", emoji: "🤝" },
       { letter: "D", text: "What if humans replace AI but make it aesthetic?", emoji: "🌈" },
@@ -212,29 +212,26 @@ export default function AIMatchQuiz() {
   const [isFarcasterAvailable, setIsFarcasterAvailable] = useState(false)
 
   useEffect(() => {
-    // Check if Farcaster is available
+    // Check if Farcaster is available and initialize SDK
     if (typeof window !== 'undefined') {
       setIsFarcasterAvailable(!!window.farsign && !!window.farcast)
-    }
-  }, [])
-
-  // Call sdk.actions.ready() after component mounts and data is loaded
-  useEffect(() => {
-    const initializeSDK = async () => {
-      if (typeof window !== 'undefined' && window.sdk?.actions?.ready) {
-        try {
-          console.log('Calling sdk.actions.ready()...')
-          await window.sdk.actions.ready()
-          console.log('sdk.actions.ready() called successfully')
-        } catch (error) {
-          console.error('Error calling sdk.actions.ready():', error)
+      
+      // Initialize SDK immediately when component mounts
+      const initializeSDK = async () => {
+        if (window.sdk?.actions?.ready) {
+          try {
+            console.log('Initializing Farcaster SDK...')
+            await window.sdk.actions.ready()
+            console.log('Farcaster SDK initialized successfully')
+          } catch (error) {
+            console.error('Failed to initialize Farcaster SDK:', error)
+          }
         }
       }
+      
+      // Call immediately without delay
+      initializeSDK()
     }
-
-    // Call after a short delay to ensure component is fully mounted
-    const timer = setTimeout(initializeSDK, 100)
-    return () => clearTimeout(timer)
   }, [])
 
   const handleSignIn = async () => {
