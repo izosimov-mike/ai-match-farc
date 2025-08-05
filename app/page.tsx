@@ -292,11 +292,18 @@ useEffect(() => {
   console.log('Share button clicked - START');
   
   try {
+    // Check if in iframe
+    const isInIframe = window !== window.parent;
+    console.log('Is in iframe:', isInIframe);
+
     // Check if window object is available
     if (typeof window === 'undefined') {
       console.error('Window object not available');
       return;
     }
+
+    // Add delay to ensure window.farcast is loaded
+    await new Promise(resolve => setTimeout(resolve, 500));
 
     // Log window.farcast availability
     console.log('window.farcast available:', !!window.farcast);
@@ -325,15 +332,28 @@ useEffect(() => {
 
     // Add try-catch specifically for composeCast
     try {
-      const castResult = await window.farcast.composeCast({
-        text: `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\n${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`,
-        embeds: [{ url: "https://ai-match-psi.vercel.app" }]
-      });
+      // Add retry logic
+      let retries = 3;
+      let castResult;
+      
+      while (retries > 0) {
+        try {
+          castResult = await window.farcast.composeCast({
+            text: `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\n${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`,
+            embeds: [{ url: "https://ai-match-psi.vercel.app" }]
+          });
+          break; // Success, exit loop
+        } catch (error) {
+          retries--;
+          if (retries === 0) throw error;
+          await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1s before retry
+        }
+      }
       
       console.log('Cast result:', castResult);
     } catch (castError) {
       console.error('ComposeCast specific error:', castError);
-      throw castError; // Re-throw to be caught by outer try-catch
+      throw castError;
     }
     
     console.log('Share completed successfully');
@@ -350,7 +370,6 @@ useEffect(() => {
     console.log('Share button clicked - END');
   }
 };
-
   const addToFarcaster = async () => {
     if (window.farcast) {
       try {
