@@ -1,22 +1,26 @@
 {
-  "name": "AI Match",
-  "subtitle": "Discover your AI personality",
-  "iconUrl": "https://ai-match-psi.vercel.app/images/icon.png",
-  "splashImageUrl": "https://ai-match-psi.vercel.app/images/splash.png",
-  "description": "Discover your AI twin in 7 fun questions! ChatGPT or Grok vibes? Join thousands on Farcaster to uncover your digital vibe and share it.",
-  "primaryCategory": "entertainment",
-  "heroImageUrl": "https://ai-match-psi.vercel.app/images/promo.png",
-  "tags": ["quiz", "personality", "ai", "digitaltwin", "social"],
-  "tagline": "Find Your AI Vibe Now!",
-  "ogTitle": "AI Match: Find Your AI Vibe",
-  "ogDescription": "Take a fun quiz to discover your AI personality and share your vibe on Farcaster!",
-  "ogImageUrl": "https://ai-match-psi.vercel.app/images/promo.png",
-  "homeUrl": "https://ai-match-psi.vercel.app",
-  "version": "1.0.0",
-  "appUrl": "https://ai-match-psi.vercel.app",
+  "miniapp": {
+    "version": "1",
+    "name": "AI Match",
+    "subtitle": "Discover your AI personality",
+    "iconUrl": "https://ai-match-psi.vercel.app/images/icon.png",
+    "homeUrl": "https://ai-match-psi.vercel.app",
+    "imageUrl": "https://ai-match-psi.vercel.app/images/promo.png",
+    "buttonTitle": "Find Your AI Vibe",
+    "splashImageUrl": "https://ai-match-psi.vercel.app/images/splash.png",
+    "splashBackgroundColor": "#ffffff",
+    "description": "Discover your AI twin in 7 fun questions! ChatGPT or Grok vibes? Join thousands on Farcaster to uncover your digital vibe and share it.",
+    "primaryCategory": "entertainment",
+    "heroImageUrl": "https://ai-match-psi.vercel.app/images/promo.png",
+    "tags": ["quiz", "personality", "ai", "digitaltwin", "social"],
+    "tagline": "Find Your AI Vibe Now!",
+    "ogTitle": "AI Match: Find Your AI Vibe",
+    "ogDescription": "Take a fun quiz to discover your AI personality and share your vibe on Farcaster!",
+    "ogImageUrl": "https://ai-match-psi.vercel.app/images/promo.png"
+  },
   "accountAssociation": {
     "header": "eyJmaWQiOjM1ODU3NCwidHlwZSI6ImF1dGgiLCJrZXkiOiIweDgxY2RCNDBFQzc5N2FEMERBQTJDNjcwYjUyMEQ3QkY0MjYzNzgxQmYifQ",
     "payload": "eyJkb21haW4iOiJhaS1tYXRjaC1wc2kudmVyY2VsLmFwcCJ9",
     "signature": "jjIjHyr6Onhs3z/bFLjJz0252a59qPjLqOQy6IwelJI1Vh6HDvsOzhP0YdJJIJztM15ev/HQrRyCX7DDjYN0/hw="
   }
-} 
+}

@@ -218,23 +218,56 @@ export default function AIMatchQuiz() {
   }, [])
 
   // Separate useEffect for SDK initialization
-useEffect(() => {
-  const initSDK = async () => {
-    console.log('Initializing SDK...');
-    if (window.sdk?.actions?.ready) {
-      console.log('Calling sdk.actions.ready()');
-      await window.sdk.actions.ready();
+  useEffect(() => {
+    const initSDK = async () => {
+      console.log('Initializing SDK...');
+      if (window.sdk?.actions?.ready) {
+        console.log('Calling sdk.actions.ready()');
+        await window.sdk.actions.ready();
+      } else if (window !== window.parent) {
+        console.log('SDK not available, falling back to postMessage');
+        window.parent.postMessage({
+          type: 'frame.ready'
+        }, '*');
+      }
+    };
+
+    initSDK();
+  }, []);
+
+  // Add Mini App function
+  const addToFarcaster = async () => {
+    if (window.farcast) {
+      try {
+        const result = await window.farcast.addMiniApp({
+          name: "AI Match",
+          description: "Discover your AI personality with this fun quiz!",
+          icon: "🤖",
+          url: "https://ai-match-psi.vercel.app"
+        })
+        
+        if (result.success) {
+          console.log('Mini app added successfully')
+          setShowAddButton(false)
+        }
+      } catch (error) {
+        console.error('Failed to add mini app:', error)
+      }
     } else if (window !== window.parent) {
-      console.log('SDK not available, falling back to postMessage');
+      // Fallback for iframe communication
       window.parent.postMessage({
-        type: 'frame.ready'
+        type: 'frame.action',
+        data: {
+          action: 'add_mini_app',
+          name: "AI Match",
+          description: "Discover your AI personality with this fun quiz!",
+          icon: "🤖",
+          url: "https://ai-match-psi.vercel.app"
+        }
       }, '*');
+      setShowAddButton(false)
     }
-  };
-
-  initSDK();
-}, []);
-
+  }
 
   const handleSignIn = async () => {
     if (window.farsign) {
@@ -323,24 +356,8 @@ const shareOnFarcaster = async () => {
   }
 };
 
-  const addToFarcaster = async () => {
-    if (window.farcast) {
-      try {
-        const result = await window.farcast.addMiniApp({
-          name: "AI Match Quiz",
-          description: "Discover your AI personality with this fun quiz!",
-          icon: "🤖",
-          url: window.location.href
-        })
-        
-        if (result.success) {
-          console.log('Mini app added successfully')
-        }
-      } catch (error) {
-        console.error('Failed to add mini app:', error)
-      }
-    }
-  }
+  // Add this state for Add Mini App button visibility
+  const [showAddButton, setShowAddButton] = useState(true)
 
   if (showResults) {
     const result = calculateResult()
@@ -395,6 +412,20 @@ const shareOnFarcaster = async () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-2 font-inter flex items-center justify-center">
+      {/* Add Mini App Button at the top */}
+      {isFarcasterAvailable && showAddButton && (
+        <div className="absolute top-2 right-2 z-10">
+          <Button
+            onClick={addToFarcaster}
+            variant="outline"
+            className="border border-white/20 text-white hover:bg-white/10 bg-white/5 backdrop-blur-sm font-semibold py-1 px-3 rounded-xl hover:scale-105 transition-all duration-300 text-xs"
+          >
+            <Sparkles className="w-3 h-3 mr-1" />
+            Add to Farcaster
+          </Button>
+        </div>
+      )}
+      
       <div className="max-w-sm w-full">
         {currentQuestion === -1 ? (
           <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden animate-fade-in">

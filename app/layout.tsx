@@ -44,21 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
-<meta name="fc:miniapp" content='{
-  "version": "1",
-  "imageUrl": "https://ai-match-psi.vercel.app/images/promo.png",
-  "iconUrl": "https://ai-match-psi.vercel.app/images/icon.png",
-  "button": {
-    "title": "Find Your AI Vibe",
-    "action": {
-      "type": "launch_frame",
-      "name": "AI Match",
-      "url": "https://ai-match-psi.vercel.app",
-      "splashImageUrl": "https://ai-match-psi.vercel.app/images/splash.png",
-      "splashBackgroundColor": "#ffffff"
-    }
-  }
-}' />
+<meta name="fc:miniapp" content='{"version":"1","imageUrl":"https://ai-match-psi.vercel.app/images/promo.png","iconUrl":"https://ai-match-psi.vercel.app/images/icon.png","button":{"title":"Find Your AI Vibe","action":{"type":"launch_frame","name":"AI Match","url":"https://ai-match-psi.vercel.app","splashImageUrl":"https://ai-match-psi.vercel.app/images/splash.png","splashBackgroundColor":"#ffffff"}}}' />
 </head>
       <body className={`${inter.className} antialiased`}>{children}</body>
     </html>
