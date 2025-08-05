@@ -47,8 +47,9 @@ export default function RootLayout({
 <meta name="fc:miniapp" content='{
   "version": "1",
   "imageUrl": "https://ai-match-psi.vercel.app/images/promo.png",
+  "imageAspectRatio": "1.91:1",
   "button": {
-    "title": "Start Matching",
+    "title": "Find Your AI Vibe",
     "action": {
       "type": "launch_frame",
       "name": "AI Match",
