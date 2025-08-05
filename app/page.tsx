@@ -215,19 +215,26 @@ export default function AIMatchQuiz() {
     // Check if Farcaster is available
     if (typeof window !== 'undefined') {
       setIsFarcasterAvailable(!!window.farsign && !!window.farcast)
-      
-      // Call sdk.actions.ready() immediately to remove splash screen
-      if (window.sdk?.actions?.ready) {
-        window.sdk.actions.ready()
-      }
     }
   }, [])
 
-  // Call sdk.actions.ready() immediately on mount
+  // Call sdk.actions.ready() after component mounts and data is loaded
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.sdk?.actions?.ready) {
-      window.sdk.actions.ready()
+    const initializeSDK = async () => {
+      if (typeof window !== 'undefined' && window.sdk?.actions?.ready) {
+        try {
+          console.log('Calling sdk.actions.ready()...')
+          await window.sdk.actions.ready()
+          console.log('sdk.actions.ready() called successfully')
+        } catch (error) {
+          console.error('Error calling sdk.actions.ready():', error)
+        }
+      }
     }
+
+    // Call after a short delay to ensure component is fully mounted
+    const timer = setTimeout(initializeSDK, 100)
+    return () => clearTimeout(timer)
   }, [])
 
   const handleSignIn = async () => {
@@ -455,7 +462,7 @@ export default function AIMatchQuiz() {
                        key={option.letter}
                        onClick={() => handleAnswer(option.letter)}
                        variant="outline"
-                       className={`p-2 h-auto text-left justify-start border-2 border-white/20 text-white bg-white/5 hover:bg-white/15 transition-all duration-300 rounded-lg font-medium text-xs ${
+                       className={`p-1.5 h-auto text-left justify-start border border-white/20 text-white bg-white/5 hover:bg-white/15 transition-all duration-300 rounded-md font-medium text-xs ${
                          selectedAnswer === option.letter
                            ? "bg-white/20 scale-105 border-white/40 shadow-lg"
                            : "hover:scale-102 hover:border-white/30"
@@ -463,7 +470,7 @@ export default function AIMatchQuiz() {
                        disabled={selectedAnswer !== null}
                        style={{ animationDelay: `${index * 100}ms` }}
                      >
-                       <span className="text-lg mr-2 flex-shrink-0">{option.emoji}</span>
+                       <span className="text-base mr-1.5 flex-shrink-0">{option.emoji}</span>
                        <span className="flex-1 text-white leading-relaxed text-xs">{option.text}</span>
                      </Button>
                   ))}
