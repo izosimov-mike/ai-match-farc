@@ -8,11 +8,6 @@ import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Share2, Sparkles, User } from "lucide-react"
 
-useEffect(() => {
-  if (typeof window !== 'undefined' && window.sdk?.actions?.ready) {
-    window.sdk.actions.ready();
-  }
-}, []);
 
 // Farcaster Mini App Types
 declare global {
@@ -217,12 +212,6 @@ export default function AIMatchQuiz() {
   const [user, setUser] = useState<{ fid?: string; username?: string } | null>(null)
   const [isFarcasterAvailable, setIsFarcasterAvailable] = useState(false)
 
-  useEffect(() => {
-    // Check if Farcaster is available
-    if (typeof window !== 'undefined') {
-      setIsFarcasterAvailable(!!window.farsign && !!window.farcast)
-    }
-  }, [])
 
   // Separate useEffect for SDK initialization
   useEffect(() => {
