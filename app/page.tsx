@@ -212,26 +212,30 @@ export default function AIMatchQuiz() {
   const [isFarcasterAvailable, setIsFarcasterAvailable] = useState(false)
 
   useEffect(() => {
-    // Check if Farcaster is available and initialize SDK
+    // Check if Farcaster is available
     if (typeof window !== 'undefined') {
       setIsFarcasterAvailable(!!window.farsign && !!window.farcast)
-      
-      // Initialize SDK immediately when component mounts
-      const initializeSDK = async () => {
-        if (window.sdk?.actions?.ready) {
-          try {
-            console.log('Initializing Farcaster SDK...')
-            await window.sdk.actions.ready()
-            console.log('Farcaster SDK initialized successfully')
-          } catch (error) {
-            console.error('Failed to initialize Farcaster SDK:', error)
-          }
+    }
+  }, [])
+
+  // Separate useEffect for SDK initialization
+  useEffect(() => {
+    const initializeSDK = async () => {
+      // Wait for window to be available and SDK to be loaded
+      if (typeof window !== 'undefined' && window.sdk?.actions?.ready) {
+        try {
+          console.log('Calling sdk.actions.ready()...')
+          await window.sdk.actions.ready()
+          console.log('sdk.actions.ready() called successfully')
+        } catch (error) {
+          console.error('Error calling sdk.actions.ready():', error)
         }
       }
-      
-      // Call immediately without delay
-      initializeSDK()
     }
+
+    // Call after component is fully mounted
+    const timer = setTimeout(initializeSDK, 100)
+    return () => clearTimeout(timer)
   }, [])
 
   const handleSignIn = async () => {

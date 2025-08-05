@@ -12,6 +12,8 @@
   "ogDescription": "Take a fun quiz to discover your AI personality and share your vibe on Farcaster!",
   "ogImageUrl": "https://ai-match-psi.vercel.app/images/promo.png",
   "homeUrl": "https://ai-match-psi.vercel.app",
+  "version": "1.0.0",
+  "appUrl": "https://ai-match-psi.vercel.app",
   "accountAssociation": {
     "header": "eyJmaWQiOjM1ODU3NCwidHlwZSI6ImF1dGgiLCJrZXkiOiIweDgxY2RCNDBFQzc5N2FEMERBQTJDNjcwYjUyMEQ3QkY0MjYzNzgxQmYifQ",
     "payload": "eyJkb21haW4iOiJhaS1tYXRjaC1wc2kudmVyY2VsLmFwcCJ9",
