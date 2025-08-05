@@ -212,6 +212,10 @@ export default function AIMatchQuiz() {
   const [user, setUser] = useState<{ fid?: string; username?: string } | null>(null)
   const [isFarcasterAvailable, setIsFarcasterAvailable] = useState(false)
 
+    // Add this useEffect to check Farcaster availability
+  useEffect(() => {
+    setIsFarcasterAvailable(!!window.farcast && !!window.farsign)
+  }, [])
 
   // Separate useEffect for SDK initialization
   useEffect(() => {
