@@ -288,39 +288,20 @@ useEffect(() => {
     return winners[0][0] as keyof typeof results
   }
 
-
-
   const shareOnFarcaster = async () => {
+  if (window.farcast?.composeCast) {
     const result = calculateResult()
     const resultData = results[result as keyof typeof results]
-    const shareText = `Just discovered I have ${resultData.title}! ${resultData.emoji} ${resultData.description} What's your AI personality? #AIMatch #Farcaster`
-
-    if (window.farcast) {
-      try {
-        const castResult = await window.farcast.composeCast({
-          text: shareText,
-          embeds: [{ url: window.location.href }]
-        })
-        
-        if (castResult.success) {
-          console.log('Cast posted successfully:', castResult.hash)
-        }
-      } catch (error) {
-        console.error('Failed to post cast:', error)
-      }
-    } else {
-      // Fallback to regular share
-      if (navigator.share) {
-        navigator.share({
-          title: "AI Match Quiz Results",
-          text: shareText,
-          url: window.location.href,
-        })
-      } else {
-        navigator.clipboard.writeText(shareText + " " + window.location.href)
-      }
+    try {
+      await window.farcast.composeCast({
+        text: `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\n${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`,
+        embeds: [{ url: "https://ai-match-psi.vercel.app" }]
+      });
+    } catch (error) {
+      console.error('Share error:', error);
     }
   }
+};
 
   const addToFarcaster = async () => {
     if (window.farcast) {
