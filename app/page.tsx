@@ -304,22 +304,15 @@ const shareOnFarcaster = async () => {
         data: {
           action: 'post',
           text: shareText,
-          url: "https://ai-match-psi.vercel.app"
+          url: "https://ai-match-psi.vercel.app",
+          target: "*"
         }
       }, '*');
       return;
     }
 
-    // When not in iframe (direct browser usage)
-    if (window.farcast?.composeCast) {
-      console.log('Using direct farcast API');
-      await window.farcast.composeCast({
-        text: shareText,
-        embeds: [{ url: "https://ai-match-psi.vercel.app" }]
-      });
-    } else {
-      console.error('Farcaster sharing not available');
-    }
+    // No need to check for farcast since we're in Preview Tool
+    console.error('Not in Preview Tool iframe');
   } catch (error) {
     console.error('Share failed:', error);
   } finally {
