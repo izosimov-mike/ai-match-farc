@@ -221,8 +221,11 @@ export default function AIMatchQuiz() {
 useEffect(() => {
   const initSDK = async () => {
     console.log('Initializing SDK...');
-    if (window !== window.parent) {
-      console.log('In iframe, sending ready signal');
+    if (window.sdk?.actions?.ready) {
+      console.log('Calling sdk.actions.ready()');
+      await window.sdk.actions.ready();
+    } else if (window !== window.parent) {
+      console.log('SDK not available, falling back to postMessage');
       window.parent.postMessage({
         type: 'frame.ready'
       }, '*');
@@ -285,9 +288,21 @@ const shareOnFarcaster = async () => {
     const resultData = results[result as keyof typeof results];
     const shareText = `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\nI'm ${resultData.subtitle} - ${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`;
 
-    // Check if in Preview Tool iframe
-    if (window !== window.parent) {
-      console.log('In Preview Tool iframe, sending frame.action');
+    // First try to use the SDK if available
+    if (window.farcast) {
+      console.log('Using window.farcast.composeCast');
+      const result = await window.farcast.composeCast({
+        text: shareText,
+        embeds: [{ url: "https://ai-match-psi.vercel.app" }]
+      });
+      if (result.success) {
+        console.log('Cast composed successfully');
+        return;
+      }
+    }
+    // Fallback to postMessage for iframe/frame communication
+    else if (window !== window.parent) {
+      console.log('In iframe, sending frame.action');
       window.parent.postMessage({
         type: 'frame.action',
         data: {
@@ -300,8 +315,7 @@ const shareOnFarcaster = async () => {
       return;
     }
 
-    // No need to check for farcast since we're in Preview Tool
-    console.error('Not in Preview Tool iframe');
+    console.error('No sharing method available');
   } catch (error) {
     console.error('Share failed:', error);
   } finally {
