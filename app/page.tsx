@@ -219,29 +219,18 @@ export default function AIMatchQuiz() {
 
   // Separate useEffect for SDK initialization
 useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const initSDK = () => {
-        if (window.sdk?.actions?.ready) {
-          window.sdk.actions.ready();
-          return true;
-        }
-        return false;
-      };
-
-      // Try immediately
-      if (!initSDK()) {
-        // If not successful, poll every 50ms
-        const checkSDK = setInterval(() => {
-          if (initSDK()) {
-            clearInterval(checkSDK);
-          }
-        }, 50);
-
-        // Cleanup after 5 seconds
-        setTimeout(() => clearInterval(checkSDK), 5000);
-      }
+  const initSDK = async () => {
+    console.log('Initializing SDK...');
+    if (window !== window.parent) {
+      console.log('In iframe, sending ready signal');
+      window.parent.postMessage({
+        type: 'frame.ready'
+      }, '*');
     }
-  }, []);
+  };
+
+  initSDK();
+}, []);
 
 
   const handleSignIn = async () => {
