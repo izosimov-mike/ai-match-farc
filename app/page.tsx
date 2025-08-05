@@ -298,42 +298,42 @@ useEffect(() => {
       return;
     }
 
-    // Calculate result before any async operations
     const result = calculateResult();
     const resultData = results[result as keyof typeof results];
-
-    // Post message to parent frame
+    const shareText = `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\n${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`;
+    
+    // When in iframe, use message passing
     if (window !== window.parent) {
-      console.log('Posting message to parent frame');
+      console.log('In iframe, using postMessage');
       window.parent.postMessage({
         type: 'SHARE',
         data: {
-          text: `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\n${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`,
+          text: shareText,
           url: "https://ai-match-psi.vercel.app"
         }
       }, '*');
       return;
     }
-
-    // Direct farcast usage (when not in iframe)
-    if (!window.farcast?.composeCast) {
-      console.error('window.farcast.composeCast is not available');
-      return;
-    }
-
-    console.log('Preparing to share:', {
-      result,
-      title: resultData.title,
-      emoji: resultData.emoji
-    });
-
-    const castResult = await window.farcast.composeCast({
-      text: `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\n${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`,
-      embeds: [{ url: "https://ai-match-psi.vercel.app" }]
-    });
     
-    console.log('Cast result:', castResult);
-
+    // When not in iframe, use direct farcast API
+    if (window.farcast?.composeCast) {
+      console.log('Using direct farcast API');
+      const castResult = await window.farcast.composeCast({
+        text: shareText,
+        embeds: [{ url: "https://ai-match-psi.vercel.app" }]
+      });
+      console.log('Cast result:', castResult);
+    } else {
+      // Fallback for when farcast is not available
+      if (navigator.share) {
+        await navigator.share({
+          text: shareText,
+          url: "https://ai-match-psi.vercel.app"
+        });
+      } else {
+        console.error('No sharing mechanism available');
+      }
+    }
   } catch (error) {
     console.error('Share failed:', error);
   } finally {
