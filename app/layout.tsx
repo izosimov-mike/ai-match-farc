@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     images: ["https://ai-match-psi.vercel.app/images/promo.png"],
   },
 other: {
-    'fc:frame': 'vNext',
+    'fc:frame': 'vNext-2024-02-01',
     'fc:frame:image': 'https://ai-match-psi.vercel.app/images/promo.png', // Use existing promo image
     'fc:frame:button:1': 'Start Matching'
   }
@@ -49,9 +49,20 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
-  <meta property="fc:frame" content="vNext" />
-  <meta property="fc:frame:image" content="https://ai-match-psi.vercel.app/images/promo.png" />
-  <meta property="fc:frame:button:1" content="Start Matching" />
+<meta name="fc:miniapp" content='{
+  "version": "1",
+  "imageUrl": "https://ai-match-psi.vercel.app/images/promo.png",
+  "button": {
+    "title": "Start Matching",
+    "action": {
+      "type": "launch_frame",
+      "name": "AI Match",
+      "url": "https://ai-match-psi.vercel.app",
+      "splashImageUrl": "https://ai-match-psi.vercel.app/images/splash.png",
+      "splashBackgroundColor": "#ffffff"
+    }
+  }
+}' />
 </head>
       <body className={`${inter.className} antialiased`}>{children}</body>
     </html>
