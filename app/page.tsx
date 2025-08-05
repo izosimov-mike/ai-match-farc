@@ -1,11 +1,12 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
-import { Share2, RotateCcw, Sparkles, User } from "lucide-react"
+import { Share2, Sparkles, User } from "lucide-react"
 
 // Farcaster Mini App Types
 declare global {
@@ -273,13 +274,7 @@ export default function AIMatchQuiz() {
     return winners[0][0] as keyof typeof results
   }
 
-  const resetQuiz = () => {
-    setCurrentQuestion(-1)
-    setAnswers([])
-    setShowResults(false)
-    setSelectedAnswer(null)
-    setShuffledQuestions(generateShuffledQuestions())
-  }
+
 
   const shareOnFarcaster = async () => {
     const result = calculateResult()
@@ -341,14 +336,16 @@ export default function AIMatchQuiz() {
         <div className="max-w-sm mx-auto animate-bounce-in">
           <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden">
             <CardContent className="p-0">
-              <div className="w-full">
-                <img 
-                  src={`/images/results/${getImageName(result)}`}
-                  alt={`${resultData.title} Result`}
-                  className="w-full h-auto rounded-t-3xl animate-fade-in"
-                  style={{ animationDelay: '0.3s' }}
-                />
-              </div>
+                             <div className="w-full">
+                 <Image 
+                   src={`/images/results/${getImageName(result)}`}
+                   alt={`${resultData.title} Result`}
+                   width={400}
+                   height={300}
+                   className="w-full h-auto rounded-t-3xl animate-fade-in"
+                   style={{ animationDelay: '0.3s' }}
+                 />
+               </div>
               
               <div className="px-4 pb-4 pt-4">
                                  <div className="flex gap-2">
