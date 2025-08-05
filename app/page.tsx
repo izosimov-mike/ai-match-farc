@@ -292,84 +292,55 @@ useEffect(() => {
   console.log('Share button clicked - START');
   
   try {
-    // Check if in iframe
-    const isInIframe = window !== window.parent;
-    console.log('Is in iframe:', isInIframe);
-
     // Check if window object is available
     if (typeof window === 'undefined') {
       console.error('Window object not available');
       return;
     }
 
-    // Add delay to ensure window.farcast is loaded
-    await new Promise(resolve => setTimeout(resolve, 500));
+    // Calculate result before any async operations
+    const result = calculateResult();
+    const resultData = results[result as keyof typeof results];
 
-    // Log window.farcast availability
-    console.log('window.farcast available:', !!window.farcast);
-    
-    if (!window.farcast) {
-      console.error('window.farcast is not available');
+    // Post message to parent frame
+    if (window !== window.parent) {
+      console.log('Posting message to parent frame');
+      window.parent.postMessage({
+        type: 'SHARE',
+        data: {
+          text: `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\n${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`,
+          url: "https://ai-match-psi.vercel.app"
+        }
+      }, '*');
       return;
     }
 
-    // Log composeCast method availability
-    console.log('window.farcast.composeCast available:', !!window.farcast.composeCast);
-
-    if (!window.farcast.composeCast) {
+    // Direct farcast usage (when not in iframe)
+    if (!window.farcast?.composeCast) {
       console.error('window.farcast.composeCast is not available');
       return;
     }
 
-    const result = calculateResult();
-    const resultData = results[result as keyof typeof results];
-    
     console.log('Preparing to share:', {
       result,
       title: resultData.title,
       emoji: resultData.emoji
     });
 
-    // Add try-catch specifically for composeCast
-    try {
-      // Add retry logic
-      let retries = 3;
-      let castResult;
-      
-      while (retries > 0) {
-        try {
-          castResult = await window.farcast.composeCast({
-            text: `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\n${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`,
-            embeds: [{ url: "https://ai-match-psi.vercel.app" }]
-          });
-          break; // Success, exit loop
-        } catch (error) {
-          retries--;
-          if (retries === 0) throw error;
-          await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1s before retry
-        }
-      }
-      
-      console.log('Cast result:', castResult);
-    } catch (castError) {
-      console.error('ComposeCast specific error:', castError);
-      throw castError;
-    }
+    const castResult = await window.farcast.composeCast({
+      text: `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\n${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`,
+      embeds: [{ url: "https://ai-match-psi.vercel.app" }]
+    });
     
-    console.log('Share completed successfully');
+    console.log('Cast result:', castResult);
+
   } catch (error) {
     console.error('Share failed:', error);
-    if (error instanceof Error) {
-      console.error('Error details:', {
-        name: error.name,
-        message: error.message,
-        stack: error.stack
-      });
-    }
   } finally {
     console.log('Share button clicked - END');
   }
 };
+
   const addToFarcaster = async () => {
     if (window.farcast) {
       try {
@@ -412,10 +383,7 @@ useEffect(() => {
               <div className="px-4 pb-4 pt-4">
                                  <div className="flex gap-2">
 <Button
-  onClick={() => {
-    console.log('Share button clicked via onClick');
-    shareOnFarcaster();
-  }}
+  onClick={shareOnFarcaster}  // Simplified
   className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-semibold py-3 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm"
 >
   <Share2 className="w-4 h-4 mr-2" />
