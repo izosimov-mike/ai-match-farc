@@ -289,17 +289,23 @@ useEffect(() => {
   }
 
   const shareOnFarcaster = async () => {
+  console.log('Share button clicked'); // Add debug log
   if (window.farcast?.composeCast) {
+    console.log('Farcaster composeCast available'); // Add debug log
     const result = calculateResult()
     const resultData = results[result as keyof typeof results]
     try {
+      console.log('Attempting to compose cast...'); // Add debug log
       await window.farcast.composeCast({
         text: `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\n${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`,
         embeds: [{ url: "https://ai-match-psi.vercel.app" }]
       });
+      console.log('Cast composed successfully'); // Add debug log
     } catch (error) {
       console.error('Share error:', error);
     }
+  } else {
+    console.log('Farcaster composeCast not available'); // Add debug log
   }
 };
 
