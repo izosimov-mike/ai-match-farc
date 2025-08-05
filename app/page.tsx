@@ -218,24 +218,31 @@ export default function AIMatchQuiz() {
   }, [])
 
   // Separate useEffect for SDK initialization
-  useEffect(() => {
-    const initializeSDK = async () => {
-      // Wait for window to be available and SDK to be loaded
-      if (typeof window !== 'undefined' && window.sdk?.actions?.ready) {
-        try {
-          console.log('Calling sdk.actions.ready()...')
-          await window.sdk.actions.ready()
-          console.log('sdk.actions.ready() called successfully')
-        } catch (error) {
-          console.error('Error calling sdk.actions.ready():', error)
+useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const initSDK = () => {
+        if (window.sdk?.actions?.ready) {
+          window.sdk.actions.ready();
+          return true;
         }
+        return false;
+      };
+
+      // Try immediately
+      if (!initSDK()) {
+        // If not successful, poll every 50ms
+        const checkSDK = setInterval(() => {
+          if (initSDK()) {
+            clearInterval(checkSDK);
+          }
+        }, 50);
+
+        // Cleanup after 5 seconds
+        setTimeout(() => clearInterval(checkSDK), 5000);
       }
     }
+  }, []);
 
-    // Call after component is fully mounted
-    const timer = setTimeout(initializeSDK, 100)
-    return () => clearTimeout(timer)
-  }, [])
 
   const handleSignIn = async () => {
     if (window.farsign) {
