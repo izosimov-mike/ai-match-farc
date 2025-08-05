@@ -455,14 +455,14 @@ export default function AIMatchQuiz() {
                   {shuffledQuestions[currentQuestion].question}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="px-4 pb-6">
-                <div className="grid gap-3">
-                  {shuffledQuestions[currentQuestion].options.map((option, index) => (
-                                         <Button
+                             <CardContent className="px-3 pb-6">
+                 <div className="grid gap-2">
+                   {shuffledQuestions[currentQuestion].options.map((option, index) => (
+                     <Button
                        key={option.letter}
                        onClick={() => handleAnswer(option.letter)}
                        variant="outline"
-                       className={`p-1.5 h-auto text-left justify-start border border-white/20 text-white bg-white/5 hover:bg-white/15 transition-all duration-300 rounded-md font-medium text-xs ${
+                       className={`p-1 h-auto text-left justify-start border border-white/20 text-white bg-white/5 hover:bg-white/15 transition-all duration-300 rounded-md font-medium text-xs ${
                          selectedAnswer === option.letter
                            ? "bg-white/20 scale-105 border-white/40 shadow-lg"
                            : "hover:scale-102 hover:border-white/30"
@@ -470,12 +470,12 @@ export default function AIMatchQuiz() {
                        disabled={selectedAnswer !== null}
                        style={{ animationDelay: `${index * 100}ms` }}
                      >
-                       <span className="text-base mr-1.5 flex-shrink-0">{option.emoji}</span>
+                       <span className="text-sm mr-1 flex-shrink-0">{option.emoji}</span>
                        <span className="flex-1 text-white leading-relaxed text-xs">{option.text}</span>
                      </Button>
-                  ))}
-                </div>
-              </CardContent>
+                   ))}
+                 </div>
+               </CardContent>
             </Card>
           </div>
         )}
