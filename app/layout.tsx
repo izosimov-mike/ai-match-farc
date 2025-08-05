@@ -34,11 +34,6 @@ export const metadata: Metadata = {
     description: "Take a fun quiz to discover your AI personality and share your vibe on Farcaster!",
     images: ["https://ai-match-psi.vercel.app/images/promo.png"],
   },
-other: {
-    'fc:frame': 'vNext-2024-02-01',
-    'fc:frame:image': 'https://ai-match-psi.vercel.app/images/promo.png', // Use existing promo image
-    'fc:frame:button:1': 'Start Matching'
-  }
 }
 
 export default function RootLayout({
