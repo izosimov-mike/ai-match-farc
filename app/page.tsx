@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Share2, Sparkles, User } from "lucide-react"
+import { sdk } from "@farcaster/miniapp-sdk"
 
 // Farcaster Mini App Types
 declare global {
@@ -220,13 +221,9 @@ export default function AIMatchQuiz() {
     const initSDK = async () => {
       console.log('Initializing SDK...')
       try {
-        if (window.sdk?.actions?.ready) {
-          console.log('SDK available, calling sdk.actions.ready()')
-          await window.sdk.actions.ready()
-          console.log('sdk.actions.ready() called successfully')
-        } else {
-          console.error('Farcaster Mini App SDK not available. Ensure @farcaster/miniapp-sdk is included in the project.')
-        }
+        console.log('SDK available, calling sdk.actions.ready()')
+        await sdk.actions.ready()
+        console.log('sdk.actions.ready() called successfully')
       } catch (error) {
         console.error('Failed to call sdk.actions.ready():', error)
       }
