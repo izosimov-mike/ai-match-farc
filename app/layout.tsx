@@ -57,11 +57,14 @@ export default function RootLayout({
               --mini-app-height: 695px;
             }
           }
-          body {
+          html, body {
             width: var(--mini-app-width);
+            max-width: var(--mini-app-width);
             height: var(--mini-app-height);
+            max-height: var(--mini-app-height);
             margin: 0 auto;
             overflow: hidden;
+            box-sizing: border-box;
           }
         `}} />
       </head>

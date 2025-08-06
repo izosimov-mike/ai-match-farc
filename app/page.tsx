@@ -8,7 +8,6 @@ import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Share2, Sparkles, User } from "lucide-react"
 
-
 // Farcaster Mini App Types
 declare global {
   interface Window {
@@ -51,7 +50,7 @@ const questions = [
     question: "Your conversation style?",
     options: [
       { letter: "A", text: "Helpful professor (detailed explanations with sources)", emoji: "📚" },
-      { letter: "B", text: "Chaotic bestie (unhinged takes + fire memes)", emoji: "😈" },
+      { letter: "B", text: "Chaotic bestie (spicy takes + fire memes)", emoji: "😈" },
       { letter: "C", text: "Mindful philosopher (thoughtful + empathetic)", emoji: "🧘" },
       { letter: "D", text: "Creative chaos agent (wild ideas + plot twists)", emoji: "🎭" },
     ],
@@ -62,7 +61,7 @@ const questions = [
     options: [
       { letter: "A", text: "Pulls out 47-slide presentation", emoji: "🤓" },
       { letter: "B", text: "Number go up, number go down, cope harder", emoji: "💀" },
-      { letter: "C", text: "Let's discuss the ethical implications first...", emoji: "🌱" },
+      { letter: "C", text: "Let's discuss the ethical implications first", emoji: "🌱" },
       { letter: "D", text: "What if we made crypto but for cats?", emoji: "🚀" },
     ],
   },
@@ -71,7 +70,7 @@ const questions = [
     question: "Your ideal way to spend a weekend?",
     options: [
       { letter: "A", text: "Deep-diving Wikipedia rabbit holes until 3am", emoji: "📖" },
-      { letter: "B", text: "Creating the most unhinged TikToks known to humanity", emoji: "📱" },
+      { letter: "B", text: "Pushing TikTok content into the stratosphere", emoji: "📱" },
       { letter: "C", text: "Journaling at a cozy cafe with oat milk lattes", emoji: "☕" },
       { letter: "D", text: "Building something weird that shouldn't exist", emoji: "🎨" },
     ],
@@ -80,7 +79,7 @@ const questions = [
     id: 4,
     question: "When someone says 'AI will replace humans':",
     options: [
-      { letter: "A", text: "cites 12 research papers about human-AI collaboration", emoji: "📊" },
+      { letter: "A", text: "References 12 researches on human-AI collaboration", emoji: "📊" },
       { letter: "B", text: "Bold of you to assume I haven't already", emoji: "🔥" },
       { letter: "C", text: "Maybe we can coexist and learn from each other?", emoji: "🤝" },
       { letter: "D", text: "What if humans replace AI but make it aesthetic?", emoji: "🌈" },
@@ -93,7 +92,7 @@ const questions = [
       { letter: "A", text: "Turning complex topics into digestible content", emoji: "🧠" },
       { letter: "B", text: "Generating cursed content that goes viral", emoji: "💣" },
       { letter: "C", text: "Making everyone feel heard and validated", emoji: "✨" },
-      { letter: "D", text: "Turning mundane tasks into creative adventures", emoji: "🎪" },
+      { letter: "D", text: "Turning the boring into something brilliant", emoji: "🎪" },
     ],
   },
   {
@@ -122,7 +121,7 @@ const results = {
   A: {
     title: "ChatGPT Energy",
     subtitle: "The Reliable Academic Bestie",
-    emoji: "📚",
+    emoji: "??",
     gradient: "from-blue-400 via-blue-500 to-blue-600",
     strengths: "Explains TikTok trends like a PhD thesis, always has receipts",
     weaknesses: "Sometimes sounds like your high school textbook",
@@ -135,7 +134,7 @@ const results = {
   B: {
     title: "Grok Vibes",
     subtitle: "The Unhinged Truth-Teller",
-    emoji: "🔥",
+    emoji: "??",
     gradient: "from-orange-400 via-red-500 to-pink-500",
     strengths: "Zero filter, maximum chaos, will roast anyone (including yourself)",
     weaknesses: "Sometimes your honesty hits a little too hard",
@@ -148,7 +147,7 @@ const results = {
   C: {
     title: "Claude Spirit",
     subtitle: "The Thoughtful Empath",
-    emoji: "🌱",
+    emoji: "??",
     gradient: "from-green-400 via-emerald-500 to-teal-500",
     strengths: "Emotional intelligence off the charts, writes poetry about feelings",
     weaknesses: "Sometimes overthinks the small stuff",
@@ -161,7 +160,7 @@ const results = {
   D: {
     title: "Gemini Ultra Mode",
     subtitle: "The Creative Chaos Goblin",
-    emoji: "🌀",
+    emoji: "??",
     gradient: "from-purple-400 via-violet-500 to-purple-600",
     strengths: "Turns grocery lists into art projects, sees patterns in everything",
     weaknesses: "Your browser has 847 tabs open right now",
@@ -174,7 +173,7 @@ const results = {
   hybrid: {
     title: "GPT-5 Beta Mode",
     subtitle: "The Glitchy Oracle",
-    emoji: "⚡",
+    emoji: "?",
     gradient: "from-indigo-400 via-purple-500 to-pink-500",
     strengths: "Unpredictably brilliant, speaks in riddles and TikTok references",
     weaknesses: "Sometimes forgets you're not actually an AI",
@@ -211,38 +210,36 @@ export default function AIMatchQuiz() {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
   const [user, setUser] = useState<{ fid?: string; username?: string } | null>(null)
   const [isFarcasterAvailable, setIsFarcasterAvailable] = useState(false)
+  const [showAddButton, setShowAddButton] = useState(true)
 
-    // Add this useEffect to check Farcaster availability
   useEffect(() => {
     setIsFarcasterAvailable(!!window.farcast && !!window.farsign)
   }, [])
 
-  // Separate useEffect for SDK initialization
   useEffect(() => {
     const initSDK = async () => {
-      console.log('Initializing SDK...');
+      console.log('Initializing SDK...')
       if (window.sdk?.actions?.ready) {
-        console.log('Calling sdk.actions.ready()');
-        await window.sdk.actions.ready();
+        console.log('Calling sdk.actions.ready()')
+        await window.sdk.actions.ready()
       } else if (window !== window.parent) {
-        console.log('SDK not available, falling back to postMessage');
+        console.log('SDK not available, falling back to postMessage')
         window.parent.postMessage({
           type: 'frame.ready'
-        }, '*');
+        }, '*')
       }
-    };
+    }
 
-    initSDK();
-  }, []);
+    initSDK()
+  }, [])
 
-  // Add Mini App function
   const addToFarcaster = async () => {
     if (window.farcast) {
       try {
         const result = await window.farcast.addMiniApp({
           name: "AI Match",
           description: "Discover your AI personality with this fun quiz!",
-          icon: "🤖",
+          icon: "??",
           url: "https://ai-match-psi.vercel.app"
         })
         
@@ -254,17 +251,16 @@ export default function AIMatchQuiz() {
         console.error('Failed to add mini app:', error)
       }
     } else if (window !== window.parent) {
-      // Fallback for iframe communication
       window.parent.postMessage({
         type: 'frame.action',
         data: {
           action: 'add_mini_app',
           name: "AI Match",
           description: "Discover your AI personality with this fun quiz!",
-          icon: "🤖",
+          icon: "??",
           url: "https://ai-match-psi.vercel.app"
         }
-      }, '*');
+      }, '*')
       setShowAddButton(false)
     }
   }
@@ -313,51 +309,45 @@ export default function AIMatchQuiz() {
     return winners[0][0] as keyof typeof results
   }
 
-const shareOnFarcaster = async () => {
-  console.log('Share button clicked - START');
-  
-  try {
-    const result = calculateResult();
-    const resultData = results[result as keyof typeof results];
-    const shareText = `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\nI'm ${resultData.subtitle} - ${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`;
+  const shareOnFarcaster = async () => {
+    console.log('Share button clicked - START')
+    
+    try {
+      const result = calculateResult()
+      const resultData = results[result as keyof typeof results]
+      const shareText = `?? Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\nI'm ${resultData.subtitle} - ${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`
 
-    // First try to use the SDK if available
-    if (window.farcast) {
-      console.log('Using window.farcast.composeCast');
-      const result = await window.farcast.composeCast({
-        text: shareText,
-        embeds: [{ url: "https://ai-match-psi.vercel.app" }]
-      });
-      if (result.success) {
-        console.log('Cast composed successfully');
-        return;
-      }
-    }
-    // Fallback to postMessage for iframe/frame communication
-    else if (window !== window.parent) {
-      console.log('In iframe, sending frame.action');
-      window.parent.postMessage({
-        type: 'frame.action',
-        data: {
-          action: 'post',
+      if (window.farcast) {
+        console.log('Using window.farcast.composeCast')
+        const result = await window.farcast.composeCast({
           text: shareText,
-          url: "https://ai-match-psi.vercel.app",
-          target: "*"
+          embeds: [{ url: "https://ai-match-psi.vercel.app" }]
+        })
+        if (result.success) {
+          console.log('Cast composed successfully')
+          return
         }
-      }, '*');
-      return;
+      } else if (window !== window.parent) {
+        console.log('In iframe, sending frame.action')
+        window.parent.postMessage({
+          type: 'frame.action',
+          data: {
+            action: 'post',
+            text: shareText,
+            url: "https://ai-match-psi.vercel.app",
+            target: "*"
+          }
+        }, '*')
+        return
+      }
+
+      console.error('No sharing method available')
+    } catch (error) {
+      console.error('Share failed:', error)
+    } finally {
+      console.log('Share button clicked - END')
     }
-
-    console.error('No sharing method available');
-  } catch (error) {
-    console.error('Share failed:', error);
-  } finally {
-    console.log('Share button clicked - END');
   }
-};
-
-  // Add this state for Add Mini App button visibility
-  const [showAddButton, setShowAddButton] = useState(true)
 
   if (showResults) {
     const result = calculateResult()
@@ -365,9 +355,9 @@ const shareOnFarcaster = async () => {
 
     return (
       <main className="min-h-full h-full flex flex-col items-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden font-inter">
-        <div className="flex-1 flex flex-col justify-center items-center w-full h-full px-4">
-          <Card className="w-full max-w-sm bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden h-full flex flex-col animate-bounce-in mx-auto">
-            <CardContent className="p-0 flex flex-col h-full">
+        <div className="flex-1 flex flex-col justify-center items-center w-full h-full px-4" style={{ maxHeight: 'var(--mini-app-height)', maxWidth: 'var(--mini-app-width)' }}>
+          <Card className="w-full bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl flex flex-col" style={{ maxHeight: 'var(--mini-app-height)', maxWidth: 'var(--mini-app-width)' }}>
+            <CardContent className="p-0 flex flex-col mb-4">
               <div className="w-full">
                 <Image 
                   src={`/images/results/${getImageName(result)}`}
@@ -379,25 +369,17 @@ const shareOnFarcaster = async () => {
                 />
               </div>
               
-              <div className="px-4 pb-4 pt-2 flex-1 flex flex-col">
-                <div>
-                  <h2 className="text-xl font-bold text-center mb-1 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
-                    {resultData.title}
-                  </h2>
-                  <p className="text-sm text-center text-gray-300 mb-1">{resultData.subtitle}</p>
-                  <p className="text-xs text-gray-400 text-center leading-relaxed mb-2">{resultData.description}</p>
-                </div>
-                <div className="flex-1"></div>
-                
-                <div className="mt-auto">
-                  <Button
-                    onClick={shareOnFarcaster}
-                    className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-semibold py-2 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-xs"
-                  >
-                    <Share2 className="w-3 h-3 mr-1" />
-                    Share on Farcaster
-                  </Button>
-                </div>
+              <div className="px-4 pb-4 pt-1 flex flex-col">
+                <h2 className="text-xl font-bold text-center mb-4 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
+                  {resultData.title}
+                </h2>
+                <Button
+                  onClick={shareOnFarcaster}
+                  className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-semibold py-2 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-xs"
+                >
+                  <Share2 className="w-3 h-3 mr-1" />
+                  Share on Farcaster
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -408,7 +390,6 @@ const shareOnFarcaster = async () => {
 
   return (
     <main className="min-h-full h-full flex flex-col items-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden font-inter">
-      {/* Add Mini App Button at the top */}
       {isFarcasterAvailable && showAddButton && (
         <div className="absolute top-2 right-2 z-10">
           <Button
@@ -416,7 +397,7 @@ const shareOnFarcaster = async () => {
             variant="outline"
             className="border border-white/20 text-white hover:bg-white/10 bg-white/5 backdrop-blur-sm font-semibold py-1 px-3 rounded-xl hover:scale-105 transition-all duration-300 text-xs"
           >
-            <Sparkles className="w-3 h-3 mr-1" />
+            <Share2 className="w-3 h-3 mr-1" />
             Add to Farcaster
           </Button>
         </div>
@@ -424,7 +405,7 @@ const shareOnFarcaster = async () => {
       
       <div className="flex-1 flex flex-col justify-center items-center w-full h-full px-4">
         {currentQuestion === -1 ? (
-          <Card className="w-full max-w-sm bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden animate-fade-in flex flex-col h-full mx-auto">
+          <Card className="w-full bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden animate-fade-in flex flex-col h-full mx-auto" style={{ maxWidth: 'var(--mini-app-width)' }}>
             <div className="h-1 bg-gradient-to-r from-cyan-400 via-blue-500 via-purple-500 to-pink-500" />
             <CardHeader className="text-center pt-3 pb-1">
               <div className="text-6xl mb-2 animate-bounce-in">🤖</div>
@@ -432,73 +413,72 @@ const shareOnFarcaster = async () => {
                 AI Match
               </CardTitle>
               <p className="text-lg mb-1 font-semibold text-gray-200">Which AI Personality Are You?</p>
-              <p className="text-gray-300 mb-1 text-sm leading-relaxed">7 questions to discover your digital twin ✨</p>
+              <p className="text-gray-300 mb-1 text-sm leading-relaxed">7 questions to discover your digital twin ?</p>
               <div className="text-gray-400 text-sm max-w-xs mx-auto leading-relaxed">
                 Are you ChatGPT energy? Grok chaos? Claude vibes? Let&apos;s find out! 👀
               </div>
             </CardHeader>
             <CardContent className="px-6 pb-6 flex-1 flex flex-col justify-between">
-                <div></div>
-                {isFarcasterAvailable && !user && (
-                  <Button
-                    onClick={handleSignIn}
-                    className="w-full mb-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold text-sm py-3 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
-                  >
-                    <User className="w-4 h-4 mr-2" />
-                    Sign in with Farcaster
-                  </Button>
-                )}
-                
-                {user && (
-                  <div className="mb-4 text-center">
-                    <p className="text-gray-300 text-sm">Signed in as @{user.username}</p>
-                  </div>
-                )}
-                
+              <div></div>
+              {isFarcasterAvailable && !user && (
                 <Button
-                  onClick={() => {
-                    setShuffledQuestions(generateShuffledQuestions())
-                    setCurrentQuestion(0)
-                  }}
-                  className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-bold text-lg py-3 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  onClick={handleSignIn}
+                  className="w-full mb-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold text-sm py-3 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
                 >
-                  <Sparkles className="w-5 h-5 mr-2" />
-                  Let&apos;s Go!
+                  <User className="w-4 h-4 mr-2" />
+                  Sign in with Farcaster
                 </Button>
+              )}
+              
+              {user && (
+                <div className="mb-4 text-center">
+                  <p className="text-gray-300 text-sm">Signed in as @{user.username}</p>
+                </div>
+              )}
+              
+              <Button
+                onClick={() => {
+                  setShuffledQuestions(generateShuffledQuestions())
+                  setCurrentQuestion(0)
+                }}
+                className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-bold text-lg py-3 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+              >
+                <Sparkles className="w-5 h-5 mr-2" />
+                Let&apos;s Go!
+              </Button>
             </CardContent>
           </Card>
         ) : (
-          <div className="w-full max-w-sm h-full flex flex-col animate-slide-up mx-auto">
-            <div className="text-center text-white pt-0 pb-0">
+          <div className="w-full h-full flex flex-col animate-slide-up mx-auto" style={{ maxWidth: 'var(--mini-app-width)' }}>
+            <div className="text-center text-white pt-2 pb-0">
               <Badge
                 variant="secondary"
-                className="mb-0.5 px-4 py-0.5 text-sm font-semibold bg-white/10 text-white border-white/20 rounded-full"
+                className="mb-0.5 mt-2 px-4 py-0.5 text-sm font-semibold bg-white/10 text-white border-white/20 rounded-full"
               >
                 Question {currentQuestion + 1} of {shuffledQuestions.length}
               </Badge>
-              <div className="mb-1">
+              <div className="mb-1 mt-2">
                 <Progress
                   value={((currentQuestion + 1) / shuffledQuestions.length) * 100}
-                  className="h-1 bg-white/10 rounded-full overflow-hidden"
+                  className="h-2 bg-white/10 rounded-full overflow-hidden w-11/12 mx-auto"
                 />
               </div>
             </div>
 
-            <Card className="w-full max-w-sm bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden flex-1 flex flex-col mx-auto">
-              <div className="h-1 bg-gradient-to-r from-cyan-400 via-blue-500 via-purple-500 to-pink-500" />
+            <Card className="w-full bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden flex-1 flex flex-col mx-auto" style={{ maxWidth: 'var(--mini-app-width)' }}>
               <CardHeader className="pt-3 pb-1">
-                <CardTitle className="text-xl text-center text-white font-bold leading-tight px-1">
+                <CardTitle className="text-lg text-center text-white font-bold leading-tight px-2 overflow-wrap break-word">
                   {shuffledQuestions[currentQuestion].question}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="px-4 pb-4 flex-1 flex flex-col justify-between">
+              <CardContent className="px-3 pb-4 flex-1 flex flex-col justify-between">
                 <div className="grid gap-2 mt-1">
                   {shuffledQuestions[currentQuestion].options.map((option, index) => (
                     <Button
                       key={option.letter}
                       onClick={() => handleAnswer(option.letter)}
                       variant="outline"
-                      className={`p-2.5 h-auto text-left justify-start border border-white/20 text-white bg-white/5 hover:bg-white/15 transition-all duration-300 rounded-xl font-medium text-sm ${
+                      className={`p-2 h-auto text-left justify-start border border-white/20 text-white bg-white/5 hover:bg-white/15 transition-all duration-300 rounded-xl font-medium text-xs overflow-wrap break-word ${
                         selectedAnswer === option.letter
                           ? "bg-white/20 scale-105 border-white/40 shadow-lg"
                           : "hover:scale-102 hover:border-white/30"
@@ -506,8 +486,8 @@ const shareOnFarcaster = async () => {
                       disabled={selectedAnswer !== null}
                       style={{ animationDelay: `${index * 100}ms` }}
                     >
-                      <span className="text-xl mr-2 flex-shrink-0">{option.emoji}</span>
-                      <span className="flex-1 text-white leading-relaxed text-sm">{option.text}</span>
+                      <span className="text-lg mr-2 flex-shrink-0">{option.emoji}</span>
+                      <span className="flex-1 text-white leading-relaxed text-xs">{option.text}</span>
                     </Button>
                   ))}
                 </div>
