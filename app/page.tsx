@@ -364,7 +364,7 @@ const shareOnFarcaster = async () => {
     const resultData = results[result as keyof typeof results]
 
     return (
-      <div className="min-h-full h-full flex flex-col items-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden font-inter">
+      <main className="min-h-full h-full flex flex-col items-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden font-inter">
         <div className="flex-1 flex flex-col justify-between w-full h-full">
           <Card className="w-full max-w-sm bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden h-full flex flex-col animate-bounce-in">
             <CardContent className="p-0 flex flex-col h-full">
@@ -379,20 +379,20 @@ const shareOnFarcaster = async () => {
                 />
               </div>
               
-              <div className="px-4 pb-6 pt-3 flex-1 flex flex-col">
-                <div className="mb-2">
+              <div className="px-4 pb-4 pt-2 flex-1 flex flex-col">
+                <div>
                   <h2 className="text-xl font-bold text-center mb-1 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
                     {resultData.title}
                   </h2>
-                  <p className="text-sm text-center text-gray-300 mb-2">{resultData.subtitle}</p>
-                  <p className="text-xs text-gray-400 text-center leading-relaxed mb-3">{resultData.description}</p>
+                  <p className="text-sm text-center text-gray-300 mb-1">{resultData.subtitle}</p>
+                  <p className="text-xs text-gray-400 text-center leading-relaxed mb-2">{resultData.description}</p>
                 </div>
                 <div className="flex-1"></div>
                 
                 <div className="flex gap-2 mt-auto">
                   <Button
                     onClick={shareOnFarcaster}
-                    className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-semibold py-3 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm"
+                    className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-semibold py-2.5 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm"
                   >
                     <Share2 className="w-4 h-4 mr-2" />
                     Share on Farcaster
@@ -415,7 +415,7 @@ const shareOnFarcaster = async () => {
             </CardContent>
           </Card>
         </div>
-      </div>
+      </main>
     )
   }
 
@@ -438,20 +438,20 @@ const shareOnFarcaster = async () => {
       <div className="flex-1 flex flex-col justify-between w-full h-full">
         {currentQuestion === -1 ? (
           <Card className="w-full max-w-sm bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden animate-fade-in flex flex-col h-full">
-            <div className="h-2 bg-gradient-to-r from-cyan-400 via-blue-500 via-purple-500 to-pink-500" />
-            <CardHeader className="text-center pt-6 pb-4">
-              <div className="text-6xl mb-4 animate-bounce-in">🤖</div>
-              <CardTitle className="text-3xl font-bold mb-3 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
+            <div className="h-1 bg-gradient-to-r from-cyan-400 via-blue-500 via-purple-500 to-pink-500" />
+            <CardHeader className="text-center pt-3 pb-1">
+              <div className="text-6xl mb-2 animate-bounce-in">🤖</div>
+              <CardTitle className="text-3xl font-bold mb-1 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
                 AI Match
               </CardTitle>
-              <p className="text-lg mb-2 font-semibold text-gray-200">Which AI Personality Are You?</p>
-              <p className="text-gray-300 mb-3 text-sm leading-relaxed">7 questions to discover your digital twin ✨</p>
+              <p className="text-lg mb-1 font-semibold text-gray-200">Which AI Personality Are You?</p>
+              <p className="text-gray-300 mb-1 text-sm leading-relaxed">7 questions to discover your digital twin ✨</p>
               <div className="text-gray-400 text-sm max-w-xs mx-auto leading-relaxed">
                 Are you ChatGPT energy? Grok chaos? Claude vibes? Let&apos;s find out! 👀
               </div>
             </CardHeader>
-            <CardContent className="px-6 pb-6 mt-auto flex flex-col">
-                <div className="flex-1"></div>
+            <CardContent className="px-6 pb-6 flex-1 flex flex-col justify-between">
+                <div></div>
                 {isFarcasterAvailable && !user && (
                   <Button
                     onClick={handleSignIn}
@@ -473,7 +473,7 @@ const shareOnFarcaster = async () => {
                     setShuffledQuestions(generateShuffledQuestions())
                     setCurrentQuestion(0)
                   }}
-                  className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-bold text-lg py-4 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-bold text-lg py-3 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
                 >
                   <Sparkles className="w-5 h-5 mr-2" />
                   Let&apos;s Go!
@@ -482,36 +482,36 @@ const shareOnFarcaster = async () => {
           </Card>
         ) : (
           <div className="w-full max-w-sm h-full flex flex-col animate-slide-up">
-            <div className="text-center text-white pt-0">
+            <div className="text-center text-white pt-0 pb-0">
               <Badge
                 variant="secondary"
-                className="mb-1 px-4 py-1.5 text-sm font-semibold bg-white/10 text-white border-white/20 rounded-full"
+                className="mb-0.5 px-4 py-0.5 text-sm font-semibold bg-white/10 text-white border-white/20 rounded-full"
               >
                 Question {currentQuestion + 1} of {shuffledQuestions.length}
               </Badge>
-              <div className="mb-2">
+              <div className="mb-1">
                 <Progress
                   value={((currentQuestion + 1) / shuffledQuestions.length) * 100}
-                  className="h-2.5 bg-white/10 rounded-full overflow-hidden"
+                  className="h-1 bg-white/10 rounded-full overflow-hidden"
                 />
               </div>
             </div>
 
-            <Card className="bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden flex-1 flex flex-col">
+            <Card className="w-full max-w-sm bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden flex-1 flex flex-col">
               <div className="h-1 bg-gradient-to-r from-cyan-400 via-blue-500 via-purple-500 to-pink-500" />
-              <CardHeader className="pt-4 pb-2">
-                <CardTitle className="text-xl text-center text-white font-bold leading-tight">
+              <CardHeader className="pt-3 pb-1">
+                <CardTitle className="text-xl text-center text-white font-bold leading-tight px-1">
                   {shuffledQuestions[currentQuestion].question}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="px-4 pb-6 flex-1 flex flex-col justify-between">
-                <div className="grid gap-3 mt-2">
+              <CardContent className="px-4 pb-4 flex-1 flex flex-col justify-between">
+                <div className="grid gap-2 mt-1">
                   {shuffledQuestions[currentQuestion].options.map((option, index) => (
                     <Button
                       key={option.letter}
                       onClick={() => handleAnswer(option.letter)}
                       variant="outline"
-                      className={`p-3 h-auto text-left justify-start border border-white/20 text-white bg-white/5 hover:bg-white/15 transition-all duration-300 rounded-xl font-medium text-sm ${
+                      className={`p-2.5 h-auto text-left justify-start border border-white/20 text-white bg-white/5 hover:bg-white/15 transition-all duration-300 rounded-xl font-medium text-sm ${
                         selectedAnswer === option.letter
                           ? "bg-white/20 scale-105 border-white/40 shadow-lg"
                           : "hover:scale-102 hover:border-white/30"
