@@ -220,29 +220,15 @@ export default function AIMatchQuiz() {
     const initSDK = async () => {
       console.log('Initializing SDK...')
       try {
-        // Wait for SDK to be available with a timeout
-        let attempts = 0
-        const maxAttempts = 10
-        const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-
-        while (!window.sdk?.actions?.ready && attempts < maxAttempts) {
-          console.log(`SDK not available, attempt ${attempts + 1}/${maxAttempts}`)
-          await delay(500) // Wait 500ms before retrying
-          attempts++
-        }
-
         if (window.sdk?.actions?.ready) {
-          console.log('Calling sdk.actions.ready()')
+          console.log('SDK available, calling sdk.actions.ready()')
           await window.sdk.actions.ready()
           console.log('sdk.actions.ready() called successfully')
         } else {
-          console.error('SDK not available after retries, falling back to postMessage')
-          window.parent.postMessage({
-            type: 'frame.ready'
-          }, '*')
+          console.error('Farcaster Mini App SDK not available. Ensure @farcaster/miniapp-sdk is included in the project.')
         }
       } catch (error) {
-        console.error('Failed to initialize SDK:', error)
+        console.error('Failed to call sdk.actions.ready():', error)
       }
     }
 

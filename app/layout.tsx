@@ -46,7 +46,8 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <meta name="fc:miniapp" content='{"version":"1","imageUrl":"https://ai-match-psi.vercel.app/images/promo.png","iconUrl":"https://ai-match-psi.vercel.app/images/icon.png","button":{"title":"Find Your AI Vibe","action":{"type":"launch_miniapp","name":"AI Match","url":"https://ai-match-psi.vercel.app","splashImageUrl":"https://ai-match-psi.vercel.app/images/splash.png","splashBackgroundColor":"#ffffff"}}}' />
-        <style dangerouslySetInnerHTML={{ __html: `
+        <script src="https://cdn.jsdelivr.net/npm/@farcaster/miniapp-sdk/dist/index.min.js" defer />
+		<style dangerouslySetInnerHTML={{ __html: `
           :root {
             --mini-app-height: 100vh;
             --mini-app-width: 100%;
