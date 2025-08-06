@@ -365,8 +365,8 @@ const shareOnFarcaster = async () => {
 
     return (
       <main className="min-h-full h-full flex flex-col items-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden font-inter">
-        <div className="flex-1 flex flex-col justify-between w-full h-full">
-          <Card className="w-full max-w-sm bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden h-full flex flex-col animate-bounce-in">
+        <div className="flex-1 flex flex-col justify-center items-center w-full h-full px-4">
+          <Card className="w-full max-w-sm bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden h-full flex flex-col animate-bounce-in mx-auto">
             <CardContent className="p-0 flex flex-col h-full">
               <div className="w-full">
                 <Image 
@@ -389,28 +389,15 @@ const shareOnFarcaster = async () => {
                 </div>
                 <div className="flex-1"></div>
                 
-                <div className="flex gap-2 mt-auto">
+                <div className="mt-auto">
                   <Button
                     onClick={shareOnFarcaster}
-                    className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-semibold py-2.5 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm"
+                    className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-blue-600 hover:via-purple-600 hover:to-pink-600 text-white font-semibold py-2 rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-xs"
                   >
-                    <Share2 className="w-4 h-4 mr-2" />
+                    <Share2 className="w-3 h-3 mr-1" />
                     Share on Farcaster
                   </Button>
                 </div>
-                
-                {isFarcasterAvailable && (
-                  <div className="mt-3">
-                    <Button
-                      onClick={addToFarcaster}
-                      variant="outline"
-                      className="w-full border-2 border-white/20 text-white hover:bg-white/10 bg-white/5 backdrop-blur-sm font-semibold py-2 rounded-2xl hover:scale-105 transition-all duration-300 text-sm"
-                    >
-                      <Sparkles className="w-4 h-4 mr-2" />
-                      Add to Farcaster
-                    </Button>
-                  </div>
-                )}
               </div>
             </CardContent>
           </Card>
@@ -435,9 +422,9 @@ const shareOnFarcaster = async () => {
         </div>
       )}
       
-      <div className="flex-1 flex flex-col justify-between w-full h-full">
+      <div className="flex-1 flex flex-col justify-center items-center w-full h-full px-4">
         {currentQuestion === -1 ? (
-          <Card className="w-full max-w-sm bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden animate-fade-in flex flex-col h-full">
+          <Card className="w-full max-w-sm bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden animate-fade-in flex flex-col h-full mx-auto">
             <div className="h-1 bg-gradient-to-r from-cyan-400 via-blue-500 via-purple-500 to-pink-500" />
             <CardHeader className="text-center pt-3 pb-1">
               <div className="text-6xl mb-2 animate-bounce-in">🤖</div>
@@ -481,7 +468,7 @@ const shareOnFarcaster = async () => {
             </CardContent>
           </Card>
         ) : (
-          <div className="w-full max-w-sm h-full flex flex-col animate-slide-up">
+          <div className="w-full max-w-sm h-full flex flex-col animate-slide-up mx-auto">
             <div className="text-center text-white pt-0 pb-0">
               <Badge
                 variant="secondary"
@@ -497,7 +484,7 @@ const shareOnFarcaster = async () => {
               </div>
             </div>
 
-            <Card className="w-full max-w-sm bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden flex-1 flex flex-col">
+            <Card className="w-full max-w-sm bg-white/5 backdrop-blur-xl border border-white/10 text-white shadow-2xl rounded-3xl overflow-hidden flex-1 flex flex-col mx-auto">
               <div className="h-1 bg-gradient-to-r from-cyan-400 via-blue-500 via-purple-500 to-pink-500" />
               <CardHeader className="pt-3 pb-1">
                 <CardTitle className="text-xl text-center text-white font-bold leading-tight px-1">
