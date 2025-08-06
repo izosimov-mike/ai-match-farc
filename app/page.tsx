@@ -49,7 +49,7 @@ const questions = [
     id: 1,
     question: "Your conversation style?",
     options: [
-      { letter: "A", text: "Helpful professor (detailed explanations with sources)", emoji: "📚" },
+      { letter: "A", text: "Helpful professor (detailed explanations)", emoji: "📚" },
       { letter: "B", text: "Chaotic bestie (spicy takes + fire memes)", emoji: "😈" },
       { letter: "C", text: "Mindful philosopher (thoughtful + empathetic)", emoji: "🧘" },
       { letter: "D", text: "Creative chaos agent (wild ideas + plot twists)", emoji: "🎭" },
@@ -79,7 +79,7 @@ const questions = [
     id: 4,
     question: "When someone says 'AI will replace humans':",
     options: [
-      { letter: "A", text: "References 12 researches on human-AI collaboration", emoji: "📊" },
+      { letter: "A", text: "Pulls 12 researches on human-AI collaboration", emoji: "📊" },
       { letter: "B", text: "Bold of you to assume I haven't already", emoji: "🔥" },
       { letter: "C", text: "Maybe we can coexist and learn from each other?", emoji: "🤝" },
       { letter: "D", text: "What if humans replace AI but make it aesthetic?", emoji: "🌈" },
