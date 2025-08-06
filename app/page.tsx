@@ -219,14 +219,30 @@ export default function AIMatchQuiz() {
   useEffect(() => {
     const initSDK = async () => {
       console.log('Initializing SDK...')
-      if (window.sdk?.actions?.ready) {
-        console.log('Calling sdk.actions.ready()')
-        await window.sdk.actions.ready()
-      } else if (window !== window.parent) {
-        console.log('SDK not available, falling back to postMessage')
-        window.parent.postMessage({
-          type: 'frame.ready'
-        }, '*')
+      try {
+        // Wait for SDK to be available with a timeout
+        let attempts = 0
+        const maxAttempts = 10
+        const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
+        while (!window.sdk?.actions?.ready && attempts < maxAttempts) {
+          console.log(`SDK not available, attempt ${attempts + 1}/${maxAttempts}`)
+          await delay(500) // Wait 500ms before retrying
+          attempts++
+        }
+
+        if (window.sdk?.actions?.ready) {
+          console.log('Calling sdk.actions.ready()')
+          await window.sdk.actions.ready()
+          console.log('sdk.actions.ready() called successfully')
+        } else {
+          console.error('SDK not available after retries, falling back to postMessage')
+          window.parent.postMessage({
+            type: 'frame.ready'
+          }, '*')
+        }
+      } catch (error) {
+        console.error('Failed to initialize SDK:', error)
       }
     }
 
@@ -315,7 +331,7 @@ export default function AIMatchQuiz() {
     try {
       const result = calculateResult()
       const resultData = results[result as keyof typeof results]
-      const shareText = `?? Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\nI'm ${resultData.subtitle} - ${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`
+      const shareText = `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\nI'm ${resultData.subtitle} - ${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`
 
       if (window.farcast) {
         console.log('Using window.farcast.composeCast')
