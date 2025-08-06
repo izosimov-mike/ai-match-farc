@@ -44,8 +44,27 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <head>
-<meta name="fc:miniapp" content='{"version":"1","imageUrl":"https://ai-match-psi.vercel.app/images/promo.png","iconUrl":"https://ai-match-psi.vercel.app/images/icon.png","button":{"title":"Find Your AI Vibe","action":{"type":"launch_frame","name":"AI Match","url":"https://ai-match-psi.vercel.app","splashImageUrl":"https://ai-match-psi.vercel.app/images/splash.png","splashBackgroundColor":"#ffffff"}}}' />
-</head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="fc:miniapp" content='{"version":"1","imageUrl":"https://ai-match-psi.vercel.app/images/promo.png","iconUrl":"https://ai-match-psi.vercel.app/images/icon.png","button":{"title":"Find Your AI Vibe","action":{"type":"launch_miniapp","name":"AI Match","url":"https://ai-match-psi.vercel.app","splashImageUrl":"https://ai-match-psi.vercel.app/images/splash.png","splashBackgroundColor":"#ffffff"}}}' />
+        <style dangerouslySetInnerHTML={{ __html: `
+          :root {
+            --mini-app-height: 100vh;
+            --mini-app-width: 100%;
+          }
+          @media (min-width: 425px) {
+            :root {
+              --mini-app-width: 424px;
+              --mini-app-height: 695px;
+            }
+          }
+          body {
+            width: var(--mini-app-width);
+            height: var(--mini-app-height);
+            margin: 0 auto;
+            overflow: hidden;
+          }
+        `}} />
+      </head>
       <body className={`${inter.className} antialiased`}>{children}</body>
     </html>
   )
