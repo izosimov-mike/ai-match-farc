@@ -10,6 +10,19 @@ import { Share2, Sparkles, User } from "lucide-react"
 import { sdk } from "@farcaster/miniapp-sdk"
 
 // Farcaster Mini App Types
+type ComposeCastInnerResult = { hash: string }
+type ComposeCastResult = { cast: ComposeCastInnerResult | null }
+type AddMiniAppResult = { cast: ComposeCastInnerResult | null }
+
+// Augment SDK types to match llms-full.txt
+declare module '@farcaster/miniapp-sdk' {
+  interface Actions {
+    ready: () => Promise<void>
+    composeCast: (params: { text: string; embeds?: string[] }) => Promise<ComposeCastResult>
+    addMiniApp: () => Promise<AddMiniAppResult>
+  }
+}
+
 declare global {
   interface Window {
     farsign?: {
@@ -217,24 +230,25 @@ export default function AIMatchQuiz() {
 
   const addToFarcaster = async () => {
     try {
-      // Type assertion to bypass TS error; verify at runtime
-      const result = await (sdk.actions.addMiniApp as any)({
-        name: "AI Match",
-        description: "Discover your AI personality with this fun quiz!",
-        icon: "??",
-        url: "https://ai-match-psi.vercel.app"
-      })
+      // Check if addMiniApp exists
+      if (typeof sdk.actions.addMiniApp !== 'function') {
+        console.error('addMiniApp is not supported in this SDK version')
+        setShowAddButton(false)
+        return
+      }
+
+      const result = await sdk.actions.addMiniApp()
       
-      console.log('addMiniApp result:', result) // Debug log
-      // Runtime check for cast property
+      console.log('addMiniApp result:', result)
       if (result && 'cast' in result && result.cast) {
         console.log('Mini app added successfully')
         setShowAddButton(false)
       } else {
         console.error('Failed to add mini app: No cast returned')
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Failed to add mini app:', error)
+      setShowAddButton(false) // Hide button on error to prevent repeated failures
     }
   }
 
@@ -295,13 +309,10 @@ export default function AIMatchQuiz() {
         text: shareText,
         embeds: ["https://ai-match-psi.vercel.app"]
       })
-      
-      console.log('Compose result:', composeResult)
-      
-      if (composeResult?.cast) {
-        console.log('Cast composed successfully:', composeResult.cast.hash)
+      if (composeResult.cast) {
+        console.log('Cast composed successfully')
       } else {
-        console.log('User cancelled cast or no cast created')
+        console.error('Cast composition failed: No cast returned')
       }
     } catch (error) {
       console.error('Share failed:', error)
@@ -358,7 +369,7 @@ export default function AIMatchQuiz() {
             variant="outline"
             className="border border-white/20 text-white hover:bg-white/10 bg-white/5 backdrop-blur-sm font-semibold py-1 px-3 rounded-xl hover:scale-105 transition-all duration-300 text-xs"
           >
-            <Share2 className="w-3 h-3 mr-1" />
+            <Sparkles className="w-3 h-3 mr-1" />
             Add to Farcaster
           </Button>
         </div>
