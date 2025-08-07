@@ -217,16 +217,21 @@ export default function AIMatchQuiz() {
 
   const addToFarcaster = async () => {
     try {
-      const result = await sdk.actions.addMiniApp({
+      // Type assertion to bypass TS error; verify at runtime
+      const result = await (sdk.actions.addMiniApp as any)({
         name: "AI Match",
         description: "Discover your AI personality with this fun quiz!",
-        icon: "🤖",
+        icon: "??",
         url: "https://ai-match-psi.vercel.app"
       })
       
-      if (result.success) {
+      console.log('addMiniApp result:', result) // Debug log
+      // Runtime check for cast property
+      if (result && 'cast' in result && result.cast) {
         console.log('Mini app added successfully')
         setShowAddButton(false)
+      } else {
+        console.error('Failed to add mini app: No cast returned')
       }
     } catch (error) {
       console.error('Failed to add mini app:', error)
@@ -288,12 +293,12 @@ export default function AIMatchQuiz() {
       console.log('Using sdk.actions.composeCast')
       const composeResult = await sdk.actions.composeCast({
         text: shareText,
-        embeds: [{ url: "https://ai-match-psi.vercel.app" }]
+        embeds: ["https://ai-match-psi.vercel.app"]
       })
-      if (composeResult.success) {
+      if (composeResult.cast) {
         console.log('Cast composed successfully')
       } else {
-        console.error('Cast composition failed:', composeResult)
+        console.error('Cast composition failed: No cast returned')
       }
     } catch (error) {
       console.error('Share failed:', error)
