@@ -15,23 +15,6 @@ declare global {
     farsign?: {
       signIn: () => Promise<{ success: boolean; fid?: string; username?: string }>
     }
-    farcast?: {
-      composeCast: (params: {
-        text: string
-        embeds?: Array<{ url: string }>
-      }) => Promise<{ success: boolean; hash?: string }>
-      addMiniApp: (params: {
-        name: string
-        description: string
-        icon: string
-        url: string
-      }) => Promise<{ success: boolean }>
-    }
-    sdk?: {
-      actions: {
-        ready: () => Promise<void>
-      }
-    }
   }
 }
 
@@ -122,7 +105,7 @@ const results = {
   A: {
     title: "ChatGPT Energy",
     subtitle: "The Reliable Academic Bestie",
-    emoji: "??",
+    emoji: "📚",
     gradient: "from-blue-400 via-blue-500 to-blue-600",
     strengths: "Explains TikTok trends like a PhD thesis, always has receipts",
     weaknesses: "Sometimes sounds like your high school textbook",
@@ -135,7 +118,7 @@ const results = {
   B: {
     title: "Grok Vibes",
     subtitle: "The Unhinged Truth-Teller",
-    emoji: "??",
+    emoji: "🔥",
     gradient: "from-orange-400 via-red-500 to-pink-500",
     strengths: "Zero filter, maximum chaos, will roast anyone (including yourself)",
     weaknesses: "Sometimes your honesty hits a little too hard",
@@ -147,8 +130,8 @@ const results = {
   },
   C: {
     title: "Claude Spirit",
-    subtitle: "The Thoughtful Empath",
-    emoji: "??",
+    subtitle: "The Friendly Oracle",
+    emoji: "🌱",
     gradient: "from-green-400 via-emerald-500 to-teal-500",
     strengths: "Emotional intelligence off the charts, writes poetry about feelings",
     weaknesses: "Sometimes overthinks the small stuff",
@@ -156,12 +139,12 @@ const results = {
     vibe: "The friend who always knows the right thing to say",
     iconicLine: "How can we approach this with more compassion?",
     description:
-      "You're the group's emotional support human who somehow makes everyone feel better about their life choices. Lawful good with cottagecore aesthetics.",
+      "Your sunny demeanor always lifts up your friends. They come to you when they need advice or just a little pick-me-up",
   },
   D: {
     title: "Gemini Ultra Mode",
     subtitle: "The Creative Chaos Goblin",
-    emoji: "??",
+    emoji: "🌀",
     gradient: "from-purple-400 via-violet-500 to-purple-600",
     strengths: "Turns grocery lists into art projects, sees patterns in everything",
     weaknesses: "Your browser has 847 tabs open right now",
@@ -174,7 +157,7 @@ const results = {
   hybrid: {
     title: "GPT-5 Beta Mode",
     subtitle: "The Glitchy Oracle",
-    emoji: "?",
+    emoji: "⚡",
     gradient: "from-indigo-400 via-purple-500 to-pink-500",
     strengths: "Unpredictably brilliant, speaks in riddles and TikTok references",
     weaknesses: "Sometimes forgets you're not actually an AI",
@@ -214,7 +197,7 @@ export default function AIMatchQuiz() {
   const [showAddButton, setShowAddButton] = useState(true)
 
   useEffect(() => {
-    setIsFarcasterAvailable(!!window.farcast && !!window.farsign)
+    setIsFarcasterAvailable(!!sdk.actions && !!window.farsign)
   }, [])
 
   useEffect(() => {
@@ -233,34 +216,20 @@ export default function AIMatchQuiz() {
   }, [])
 
   const addToFarcaster = async () => {
-    if (window.farcast) {
-      try {
-        const result = await window.farcast.addMiniApp({
-          name: "AI Match",
-          description: "Discover your AI personality with this fun quiz!",
-          icon: "??",
-          url: "https://ai-match-psi.vercel.app"
-        })
-        
-        if (result.success) {
-          console.log('Mini app added successfully')
-          setShowAddButton(false)
-        }
-      } catch (error) {
-        console.error('Failed to add mini app:', error)
+    try {
+      const result = await sdk.actions.addMiniApp({
+        name: "AI Match",
+        description: "Discover your AI personality with this fun quiz!",
+        icon: "🤖",
+        url: "https://ai-match-psi.vercel.app"
+      })
+      
+      if (result.success) {
+        console.log('Mini app added successfully')
+        setShowAddButton(false)
       }
-    } else if (window !== window.parent) {
-      window.parent.postMessage({
-        type: 'frame.action',
-        data: {
-          action: 'add_mini_app',
-          name: "AI Match",
-          description: "Discover your AI personality with this fun quiz!",
-          icon: "??",
-          url: "https://ai-match-psi.vercel.app"
-        }
-      }, '*')
-      setShowAddButton(false)
+    } catch (error) {
+      console.error('Failed to add mini app:', error)
     }
   }
 
@@ -316,31 +285,16 @@ export default function AIMatchQuiz() {
       const resultData = results[result as keyof typeof results]
       const shareText = `🎯 Just discovered my AI personality: ${resultData.title}! ${resultData.emoji}\n\nI'm ${resultData.subtitle} - ${resultData.description}\n\nFind your AI twin:\nhttps://ai-match-psi.vercel.app`
 
-      if (window.farcast) {
-        console.log('Using window.farcast.composeCast')
-        const result = await window.farcast.composeCast({
-          text: shareText,
-          embeds: [{ url: "https://ai-match-psi.vercel.app" }]
-        })
-        if (result.success) {
-          console.log('Cast composed successfully')
-          return
-        }
-      } else if (window !== window.parent) {
-        console.log('In iframe, sending frame.action')
-        window.parent.postMessage({
-          type: 'frame.action',
-          data: {
-            action: 'post',
-            text: shareText,
-            url: "https://ai-match-psi.vercel.app",
-            target: "*"
-          }
-        }, '*')
-        return
+      console.log('Using sdk.actions.composeCast')
+      const composeResult = await sdk.actions.composeCast({
+        text: shareText,
+        embeds: [{ url: "https://ai-match-psi.vercel.app" }]
+      })
+      if (composeResult.success) {
+        console.log('Cast composed successfully')
+      } else {
+        console.error('Cast composition failed:', composeResult)
       }
-
-      console.error('No sharing method available')
     } catch (error) {
       console.error('Share failed:', error)
     } finally {
