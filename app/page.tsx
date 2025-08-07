@@ -295,10 +295,13 @@ export default function AIMatchQuiz() {
         text: shareText,
         embeds: ["https://ai-match-psi.vercel.app"]
       })
-      if (composeResult.cast) {
-        console.log('Cast composed successfully')
+      
+      console.log('Compose result:', composeResult)
+      
+      if (composeResult?.cast) {
+        console.log('Cast composed successfully:', composeResult.cast.hash)
       } else {
-        console.error('Cast composition failed: No cast returned')
+        console.log('User cancelled cast or no cast created')
       }
     } catch (error) {
       console.error('Share failed:', error)
