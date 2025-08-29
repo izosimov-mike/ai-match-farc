@@ -23,4 +23,7 @@
     "payload": "eyJkb21haW4iOiJhaS1tYXRjaC1wc2kudmVyY2VsLmFwcCJ9",
     "signature": "jjIjHyr6Onhs3z/bFLjJz0252a59qPjLqOQy6IwelJI1Vh6HDvsOzhP0YdJJIJztM15ev/HQrRyCX7DDjYN0/hw="
   }
+  "baseBuilder": {
+    "allowedAddresses": ["0x459f852E759D4aC09Dfd7e310E7075801A2580C9"]
+  }
 }
